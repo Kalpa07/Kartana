@@ -7,3 +7,42 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.bg-primary{
+  background-color:primary;
+}
+
+.bg-secondary{
+  background-color:primary;
+}
+
+.bg-base{
+  background-color:primary;
+}
+
+.bg-neutral{
+  background-color:primary;
+}
+
+.bg-accent{
+  background-color:primary;
+}
+
+.text-primary{
+  color: primary
+}
+
+.text-secondary{
+  color: primary
+}
+
+.text-base{
+  color: primary
+}
+
+.text-neutral{
+  color: primary
+}
+.text-accent{
+  color: primary
+}

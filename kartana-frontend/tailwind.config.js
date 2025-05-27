@@ -8,9 +8,13 @@ module.exports = {
     theme: {
       extend: {
         colors: {
-          primary: "#1e40af",   // Example primary color
-          secondary: "#64748b", // Optional secondary color
-          accent: "#10b981",    // Optional accent color
+          primary: "#1CD9A9",  
+          secondary: "#0F5C4A", 
+          base: "#1E1E1E",
+          neutral:"#5C5C5C",
+          accent: "#D91C4A",   
+          white: "#FFFFFF",   
+          black: "#000000",   
         },
         fontFamily: {
             body: ["var(--font-inter)", "sans-serif"],
