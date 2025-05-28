@@ -11,7 +11,7 @@ const slides = [
     image: '/images/Laptop.png',
   },
   {
-    textTitle: 'Deal of the Day: Iphones!',
+    textTitle: 'Deal of the Day: iPhones!',
     textSubtitle: 'Starting ₹79,990!',
     image: '/images/Mobile.png',
   },
@@ -28,21 +28,23 @@ const Header = () => {
   const handleDotClick = (index) => setCurrent(index);
 
   return (
-    <div className="bg-grey h-auto sm:h-auto md:h-screen text-white p-6  relative">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-6 h-170 px-4 md:px-12 py-20">
+    <div className="bg-grey text-white px-4 md:px-10 py-10 md:py-20">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-10">
         {/* Text Content */}
-        <div className="space-y-6 w-full md:w-[660px]">
-          <h1 className="text-4xl md:text-6xl font-bold leading-snug text-white">
+        <div className="w-full md:w-1/2 text-center md:text-left space-y-5">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
             {slides[current].textTitle}
           </h1>
-          <p className="text-xl md:text-3xl font-medium text-white">{slides[current].textSubtitle}</p>
-          <button className="bg-color-primary hover:bg-white px-6 py-3 text-black font-semibold rounded-full w-[150px] text-lg">
+          <p className="text-lg sm:text-xl md:text-2xl font-medium">
+            {slides[current].textSubtitle}
+          </p>
+          <button className="bg-color-primary hover:bg-white text-black font-semibold px-6 py-3 rounded-full text-base sm:text-lg transition-colors duration-300 w-40">
             See More
           </button>
         </div>
 
         {/* Animated Image */}
-        <div className="relative w-full md:w-[660px] h-auto flex justify-center items-center ">
+        <div className="w-full md:w-1/2 flex justify-center items-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={slides[current].image}
@@ -50,7 +52,7 @@ const Header = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="w-full h-full"
+              className="w-full max-w-[700px]"
             >
               <Image
                 src={slides[current].image}
@@ -58,27 +60,27 @@ const Header = () => {
                 width={800}
                 height={450}
                 className="w-full h-auto object-contain"
-
               />
             </motion.div>
           </AnimatePresence>
         </div>
       </div>
 
-      {/* Dots */}
-      <div className="flex justify-center mt-6 space-x-2">
+      {/* Dots Navigation */}
+      <div className="flex justify-center mt-8 space-x-3">
         {slides.map((_, i) => (
           <button
             key={i}
             onClick={() => handleDotClick(i)}
-            className={`h-2 w-2 rounded-full transition-all duration-300 ${
+            className={`h-3 w-3 rounded-full transition-all duration-300 ${
               i === current ? 'bg-white scale-125' : 'bg-color-neutral'
             }`}
+            aria-label={`Slide ${i + 1}`}
           />
         ))}
       </div>
     </div>
   );
-}
+};
 
-export default Header
+export default Header;
