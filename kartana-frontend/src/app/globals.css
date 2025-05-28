@@ -1,48 +1,64 @@
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
-@import "tailwindcss/screens";
-@import "tailwindcss/variants";
+@import "tailwindcss";
+@tailwind utilities;
 
-body {
-  margin: 0;
-  padding: 0;
+:root {
+  --color-primary: #1CD9A9 !important;
+  --secondary: #0F5C4A !important;
+  --color-grey: #1E1E1E !important;
+  --neutral: #5C5C5C !important;
+  --accent: #D91C4A !important;
+  --white: #FFFFFF !important;
+  --black: #000000 !important;
 }
 
-.bg-primary{
-  background-color:primary;
-}
 
-.bg-secondary{
-  background-color:primary;
-}
+@layer utilities {
+  .bg-color-primary {
+    background-color: var(--color-primary) !important;
+  }
 
-.bg-base{
-  background-color:primary;
-}
+  .bg-secondary-color {
+    background-color: var(--secondary) !important;
+  }
 
-.bg-neutral{
-  background-color:primary;
-}
+  .bg-grey {
+    background-color: var(--color-grey) !important;
+  }
 
-.bg-accent{
-  background-color:primary;
-}
+  .bg-neutral {
+    background-color: var(--neutral) !important;
+  }
 
-.text-primary{
-  color: primary
-}
+  .bg-accent {
+    background-color: var(--accent);
+  }
 
-.text-secondary{
-  color: primary
-}
+  .text-primary {
+    color: var(--primary);
+  }
 
-.text-base{
-  color: primary
-}
+  .text-secondary {
+    color: var(--secondary);
+  }
 
-.text-neutral{
-  color: primary
-}
-.text-accent{
-  color: primary
+  .text-base {
+    color: var(--color-grey);
+  }
+
+  .text-neutral {
+    color: var(--neutral);
+  }
+
+  .text-accent {
+    color: var(--accent);
+  }
+
+  .dropdown-menu{
+    cursor:pointer;
+    text-align:center;
+  }
+
+  .dropdown-menu:hover {
+    background-color: var(--color-primary) !important;
+  }
 }
