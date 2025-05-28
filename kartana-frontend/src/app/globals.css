@@ -25,7 +25,7 @@
     background-color: var(--color-grey) !important;
   }
 
-  .bg-neutral {
+  .bg-color-neutral {
     background-color: var(--neutral) !important;
   }
 
@@ -61,4 +61,15 @@
   .dropdown-menu:hover {
     background-color: var(--color-primary) !important;
   }
+
+  /* globals.css or any imported CSS file */
+.gradientCategory-bg {
+  background: linear-gradient(to bottom, #5C5C5C 0%, #1E1E1E 100%);
+  transition: background 0.5s ease;
+}
+
+.gradientCategory-bg:hover {
+  background: linear-gradient(to bottom, #1CD9A9 0%, #1E1E1E 100%);
+}
+
 }

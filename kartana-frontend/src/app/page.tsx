@@ -1,8 +1,12 @@
-import Navbar from "@/components/Navbar";
+import Header from "../components/Header";
+import CategoryBar from "../components/CategoryBar";
 
 const Home = () => {
   return (
-    <Navbar/>
+    <div>
+      <Header/>
+      <CategoryBar/>
+    </div>
   );
 }
 
