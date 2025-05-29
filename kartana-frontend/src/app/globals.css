@@ -72,4 +72,10 @@
   background: linear-gradient(to bottom, #1CD9A9 0%, #1E1E1E 100%);
 }
 
+.exclusive-box {
+  background: linear-gradient(to bottom right, #16a34a, #10b981); /* from-green-600 to-emerald-500 */
+  border-radius: 0.75rem; /* rounded-xl */
+  padding: 1rem 0.5rem;    /* py-4 px-2 */
+}
+
 }
