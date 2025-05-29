@@ -108,6 +108,8 @@ const Navbar=()=> {
                     </Link>
                   </li>
                   <li className="p-2">Settings</li>
+                  <li className="p-2">SignUp</li>
+                  <li className="p-2">Settings</li>
                   <li className="p-2">Logout</li>
                 </ul>
               </div>
@@ -129,6 +131,24 @@ const Navbar=()=> {
                         }}
                       >
                         My Account
+                    </Link>
+                  </li>
+                  <li className="p-2  dropdown-menu ">
+                    <Link href="/auth/signup"
+                        onClick={() => {
+                          setMenuOpen(false);
+                        }}
+                      >
+                        SignUp
+                    </Link>
+                  </li>
+                  <li className="p-2  dropdown-menu ">
+                    <Link href="/auth/signin"
+                        onClick={() => {
+                          setMenuOpen(false);
+                        }}
+                      >
+                        SignIn
                     </Link>
                   </li>
                   <li className="p-2  dropdown-menu ">
