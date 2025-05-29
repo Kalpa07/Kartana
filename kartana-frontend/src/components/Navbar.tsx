@@ -5,9 +5,13 @@ import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import Modal from "react-modal";
 import Link from 'next/link';
+import { useSession } from "next-auth/react";
 
 const Navbar=()=> {
 
+  const { data: session, status } = useSession();
+  console.log(session,status); 
+  
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [area, setArea] = useState("Goa, 403506");
 
@@ -124,42 +128,49 @@ const Navbar=()=> {
             {userOpen && (
               <div className="absolute right-0 bg-white text-black shadow-lg w-30 mt-2 rounded-md">
                 <ul>
-                <li className="p-2  dropdown-menu ">
-                    <Link href="/account"
+                  {status === "authenticated" && (
+                    <li className="p-2  dropdown-menu ">
+                      <Link href="/account"
                         onClick={() => {
                           setMenuOpen(false);
                         }}
                       >
                         My Account
-                    </Link>
-                  </li>
-                  <li className="p-2  dropdown-menu ">
-                    <Link href="/auth/signup"
+                      </Link>
+                    </li>
+                  )}
+                  {status === "unauthenticated" && (
+                    <li className="p-2  dropdown-menu ">
+                      <Link href="/auth/signup"
                         onClick={() => {
                           setMenuOpen(false);
                         }}
                       >
                         SignUp
-                    </Link>
-                  </li>
-                  <li className="p-2  dropdown-menu ">
-                    <Link href="/auth/signin"
+                      </Link>
+                    </li>
+                  )}
+                  {status === "unauthenticated" && (
+                    <li className="p-2  dropdown-menu ">
+                      <Link href="/auth/signin"
                         onClick={() => {
                           setMenuOpen(false);
                         }}
                       >
                         SignIn
-                    </Link>
-                  </li>
-                  <li className="p-2  dropdown-menu ">
-                    <Link href="/account"
+                      </Link>
+                    </li>
+                  )}
+                  {status === "authenticated" && (
+                    <li className="p-2  dropdown-menu ">
+                      <Link href="/account"
                         onClick={() => {
                           setMenuOpen(false);
                         }}
                       >
                         Logout
-                    </Link>
-                  </li>
+                      </Link>
+                    </li>)}
                 </ul>
               </div>
             )}

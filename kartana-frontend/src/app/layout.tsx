@@ -27,10 +27,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <body className="font-body antialiased bg-base text-white">
-        <ClientLayout>{children}</ClientLayout>
-      </body>
-    </html>
+    
+      <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+        <body className="font-body antialiased bg-base text-white">
+          <ClientLayout>{children}</ClientLayout>
+        </body>
+      </html>
   );
 }

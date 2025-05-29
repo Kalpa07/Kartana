@@ -60,6 +60,7 @@
 
   .dropdown-menu:hover {
     background-color: var(--color-primary) !important;
+    border-radius: 5px;
   }
 
   /* globals.css or any imported CSS file */
