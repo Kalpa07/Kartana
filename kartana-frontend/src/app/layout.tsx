@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -32,6 +33,9 @@ export default function RootLayout({
       </div>
       <div className="">
         {children}
+      </div>
+      <div className="bottom-0 left-0 w-full z-50">
+        <Footer />
       </div>
       </body>
     </html>

@@ -6,13 +6,17 @@ import Exclusives from "../components/Exclusives";
 
 const Home = () => {
   return (
-    <div>
+    <>
+    <div className="bg-grey pt-5">
       <Header/>
       <CategoryBar/>
+    </div>
+    <div className="bg-color-neutral">
       <Deals/>
       <Brands/>
       <Exclusives/>
     </div>
+    </>
   );
 }
 
