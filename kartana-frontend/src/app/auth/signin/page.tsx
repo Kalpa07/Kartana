@@ -5,12 +5,14 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";  // Import useRouter for redirection
 import Link from "next/link"; 
 import { signIn } from "next-auth/react"; // Import signIn from NextAuth.js to manage sessions
+import Toast from "@/components/Toast";
 
 const SignIn = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isClient, setIsClient] = useState(false); // State to check if client-side
+    const [loading, setLoading] = useState(false);
 
     const router = useRouter(); // Initialize the router
 
@@ -36,9 +38,11 @@ const SignIn = () => {
         e.preventDefault();
         setError("");
         setSuccess("");
-    
+        setLoading(true);
+
         if (!formData.email || !formData.password) {
             setError("Please fill in all fields");
+            setLoading(false);
             return;
         }
     
@@ -50,10 +54,11 @@ const SignIn = () => {
     
         if (result?.error) {
             setError("Invalid email or password");
+            setLoading(false);
         } else {
             setSuccess("Signed in successfully!");
             setFormData({ email: "", password: "" });
-    
+            setLoading(false);
             // Redirect to homepage or dashboard
             router.push("/");
         }
@@ -65,9 +70,9 @@ const SignIn = () => {
     }
 
     return (
-        <div className="flex flex-row h-screen">
+        <div className="flex flex-col md:flex-row h-full md:h-screen">
             {/* Left Section */}
-            <div className="bg-grey w-1/2 h-screen flex flex-col justify-center items-center px-6 space-y-6">
+            <div className="bg-grey w-full md:w-1/2 h-screen flex flex-col justify-center items-center px-6 space-y-6">
                 <Image
                     src="/images/Kartana.png"
                     alt="Kartana Logo"
@@ -87,12 +92,15 @@ const SignIn = () => {
             </div>
 
             {/* Right Section */}
-            <div className="bg-color-neutral w-1/2 h-screen flex items-center justify-center px-6">
+            <div className="bg-color-neutral w-full md:w-1/2 h-screen flex items-center justify-center px-6">
                 <form className="w-full max-w-md bg-opacity-5 p-8 space-y-6" onSubmit={handleSubmit}>
                     <h2 className="text-2xl font-semibold text-white text-center">Sign In</h2>
 
-                    {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-                    {success && <p className="text-green-500 text-sm text-center">{success}</p>}
+                    {/* {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+                    {success && <p className="text-green-500 text-sm text-center">{success}</p>} */}
+
+                    <Toast message={error} type="error" show={!!error} />
+                    <Toast message={success} type="success" show={!!success} />
 
                     <div className="flex flex-col space-y-2">
                         <label htmlFor="email" className="text-white text-sm">Email</label>
@@ -120,10 +128,14 @@ const SignIn = () => {
 
                     <button
                         type="submit"
-                        className="w-full bg-color-primary text-black py-3 rounded-md hover:opacity-90 transition duration-200"
-                    >
-                        Sign In
+                        disabled={loading}
+                        className={`cursor-pointer w-full bg-color-primary text-black py-3 rounded-md transition duration-200 ${
+                            loading ? "opacity-60 cursor-not-allowed" : "hover:opacity-90"
+                        }`}
+                        >
+                        {loading ? "Signing in..." : "Sign In"}
                     </button>
+
                 </form>
             </div>
         </div>

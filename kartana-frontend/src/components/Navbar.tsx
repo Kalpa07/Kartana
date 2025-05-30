@@ -1,37 +1,36 @@
 "use client";
-import { FaUser, FaSearch, FaShoppingCart,FaMapMarkerAlt } from "react-icons/fa";
-import {TiThMenuOutline } from "react-icons/ti";
+import { FaUser, FaSearch, FaShoppingCart, FaMapMarkerAlt } from "react-icons/fa";
+import { TiThMenuOutline } from "react-icons/ti";
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import Modal from "react-modal";
 import Link from 'next/link';
-import { useSession } from "next-auth/react";
+import { useSession, signOut  } from "next-auth/react";
 
-const Navbar=()=> {
-
+const Navbar = () => {
   const { data: session, status } = useSession();
-  console.log(session,status); 
-  
+  console.log(session, status);
+
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [area, setArea] = useState("Goa, 403506");
-
   const [menuOpen, setMenuOpen] = useState(false);
   const [userOpen, setUserOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement | null>(null); 
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-    if (
-    dropdownRef.current &&
-    !dropdownRef.current.contains(event.target as Node)
-    ) {
-    setMenuOpen(false);
-    setUserOpen(false);
-    }
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setMenuOpen(false);
+        setUserOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
+  }, []);
 
   const toggleLocationModal = () => setLocationModalOpen(!locationModalOpen);
   const closeLocationModal = () => setLocationModalOpen(false);
@@ -39,6 +38,13 @@ const Navbar=()=> {
   const handleAreaSelection = (newArea: string) => {
     setArea(newArea);
     closeLocationModal();
+  };
+
+  const toggleLogoutModal = () => setLogoutModalOpen(!logoutModalOpen);
+
+  const handleLogout = () => {
+    signOut();
+    setLogoutModalOpen(false); 
   };
 
   return (
@@ -54,24 +60,20 @@ const Navbar=()=> {
       </div>
       <div className="flex flex-row">
 
-        {/* <div className="hidden md:flex w-80 mr-5">
+        <div className="hidden md:flex w-80 mr-5 bg-white rounded-full overflow-hidden border border-gray-300">
           <input
             type="text"
             placeholder="Search"
-            className="w-full px-2 py-1 rounded-l bg-white text-black"
+            className="flex-grow px-4 text-black outline-none bg-transparent"
           />
-          <button className="bg-white p-2 rounded-full">
+          <button className="p-2">
             <FaSearch className="text-black" />
           </button>
-        </div> */}
-
-        <div className="hidden md:flex w-80   mr-5 bg-white rounded-full overflow-hidden border border-gray-300"> 
-          <input type="text" placeholder="Search" className="flex-grow px-4  text-black outline-none bg-transparent" /> 
-          <button className="p-2"> <FaSearch className="text-black" /> </button> 
         </div>
 
         <div className="flex items-center space-x-4 text-sm mr-5">
-            <div className="relative">
+          {/* Location Dropdown */}
+          <div className="relative">
             <span className="hidden sm:inline-flex items-center cursor-pointer" onClick={toggleLocationModal}>
               <FaMapMarkerAlt className="mr-1 w-max" /> {area}
             </span>
@@ -93,22 +95,21 @@ const Navbar=()=> {
             </Modal>
           </div>
 
+          {/* Menu Toggle */}
           <div className="relative">
             <TiThMenuOutline
               className="text-xl cursor-pointer"
-              onClick={() => {setMenuOpen(!menuOpen);setUserOpen(false)}}
+              onClick={() => { setMenuOpen(!menuOpen); setUserOpen(false); }}
             />
             {menuOpen && (
               <div className="absolute right-0 bg-white text-black shadow-lg w-30 mt-2 rounded-md">
                 <ul>
                   <li className="p-2">Profile</li>
-                  <li className="p-2  dropdown-menu ">
+                  <li className="p-2 dropdown-menu">
                     <Link href="/account"
-                        onClick={() => {
-                          setMenuOpen(false);
-                        }}
-                      >
-                        My Account
+                      onClick={() => { setMenuOpen(false); }}
+                    >
+                      My Account
                     </Link>
                   </li>
                   <li className="p-2">Settings</li>
@@ -120,62 +121,59 @@ const Navbar=()=> {
             )}
           </div>
 
+          {/* User Profile */}
           <div className="relative">
             <FaUser
               className="text-xl cursor-pointer"
-              onClick={() => {setUserOpen(!userOpen);setMenuOpen(false)}}
+              onClick={() => { setUserOpen(!userOpen); setMenuOpen(false); }}
             />
             {userOpen && (
               <div className="absolute right-0 bg-white text-black shadow-lg w-30 mt-2 rounded-md">
                 <ul>
                   {status === "authenticated" && (
-                    <li className="p-2  dropdown-menu ">
+                    <li className="p-2 dropdown-menu">
                       <Link href="/account"
-                        onClick={() => {
-                          setMenuOpen(false);
-                        }}
+                        onClick={() => { setUserOpen(false); }}
                       >
                         My Account
                       </Link>
                     </li>
                   )}
                   {status === "unauthenticated" && (
-                    <li className="p-2  dropdown-menu ">
+                    <li className="p-2 dropdown-menu">
                       <Link href="/auth/signup"
-                        onClick={() => {
-                          setMenuOpen(false);
-                        }}
+                        onClick={() => { setUserOpen(false); }}
                       >
-                        SignUp
+                        Sign Up
                       </Link>
                     </li>
                   )}
                   {status === "unauthenticated" && (
-                    <li className="p-2  dropdown-menu ">
+                    <li className="p-2 dropdown-menu">
                       <Link href="/auth/signin"
-                        onClick={() => {
-                          setMenuOpen(false);
-                        }}
+                        onClick={() => { setUserOpen(false); }}
                       >
-                        SignIn
+                        Sign In
                       </Link>
                     </li>
                   )}
                   {status === "authenticated" && (
-                    <li className="p-2  dropdown-menu ">
-                      <Link href="/account"
-                        onClick={() => {
-                          setMenuOpen(false);
-                        }}
-                      >
-                        Logout
-                      </Link>
-                    </li>)}
+                    <li
+                      className="p-2 dropdown-menu cursor-pointer"
+                      onClick={() => {
+                        setUserOpen(false);
+                        toggleLogoutModal();
+                      }}
+                    >
+                      Logout
+                    </li>
+                  )}
                 </ul>
               </div>
             )}
           </div>
 
+          {/* Shopping Cart */}
           <div className="relative">
             <Link href="/#">
               <FaShoppingCart className="text-xl cursor-pointer" />
@@ -183,8 +181,34 @@ const Navbar=()=> {
           </div>
         </div>
       </div>
+
+      {/* Logout Modal */}
+      {logoutModalOpen && (
+        <Modal
+          isOpen={logoutModalOpen}
+          onRequestClose={toggleLogoutModal}
+          className="bg-white rounded-md opacity-100 p-6 max-w-xs mx-auto mt-40 shadow-lg outline-none"
+          overlayClassName="fixed inset-0 bg-[rgba(0,0,0,0.3)] flex items-center justify-center z-50"
+        >
+          <h2 className="text-lg font-semibold mb-4 text-black">Are you sure you want to logout?</h2>
+          <div className="flex space-x-4">
+            <button
+              onClick={() => { setLogoutModalOpen(false); }}
+              className="mt-4 text-sm text-blue-600 hover:underline"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => {handleLogout(); setLogoutModalOpen(false); }}
+              className="mt-4 text-sm text-red-600 hover:underline"
+            >
+              Logout
+            </button>
+          </div>
+        </Modal>
+      )}
     </div>
   );
-}
+};
 
 export default Navbar;
