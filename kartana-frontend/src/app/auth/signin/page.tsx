@@ -2,29 +2,29 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";  // Import useRouter for redirection
+import { useRouter } from "next/navigation"; 
 import Link from "next/link"; 
-import { signIn } from "next-auth/react"; // Import signIn from NextAuth.js to manage sessions
+import { signIn } from "next-auth/react"; 
 import Toast from "@/components/Toast";
 
 const SignIn = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    const [isClient, setIsClient] = useState(false); // State to check if client-side
+    const [isClient, setIsClient] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const router = useRouter(); // Initialize the router
+    const router = useRouter();
 
     useEffect(() => {
-        setIsClient(true); // Ensure this only runs on the client
+        setIsClient(true); 
     }, []);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setError("");
             setSuccess("");
-        }, 10000); // Clear messages after 10 seconds
+        }, 10000);
 
         return () => clearTimeout(timer);
     }, [error, success]);
@@ -66,7 +66,7 @@ const SignIn = () => {
     
 
     if (!isClient) {
-        return null; // Render nothing during server-side rendering
+        return null; 
     }
 
     return (

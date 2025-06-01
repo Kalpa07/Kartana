@@ -12,7 +12,7 @@ const SignUp = () => {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  // Auto-clear messages after 10-15 seconds
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       setError("");
@@ -21,37 +21,6 @@ const SignUp = () => {
 
     return () => clearTimeout(timer);
   }, [error, success]);
-
-//   // Check if user already exists
-//   useEffect(() => {
-//     const checkUserExists = async () => {
-//       if (formData.email && !checkingUser) {
-//         setCheckingUser(true);
-//         try {
-//           const checkRes = await fetch(`http://localhost:3001/users?email=${formData.email}`);
-//           const existing = await checkRes.json();
-//           if (existing.length > 0) {
-//             setError("User already exists");
-//           } else {
-//             setError("");
-//           }
-//         } catch (error) {
-//           console.error("Error checking user:", error);
-//           setError("Something went wrong while checking user.");
-//         } finally {
-//           setCheckingUser(false);
-//         }
-//       }
-
-//       const timeoutId = setTimeout(() => {
-//         if (formData.email && !checkingUser) {
-//           checkUserExists();
-//         }
-//       }, 800);
-    
-//       return () => clearTimeout(timeoutId);
-//     };
-//   }, [formData.email]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
