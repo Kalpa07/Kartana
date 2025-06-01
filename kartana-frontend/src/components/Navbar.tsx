@@ -5,7 +5,7 @@ import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import Modal from "react-modal";
 import Link from 'next/link';
-import { useSession, signOut  } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -44,7 +44,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     signOut();
-    setLogoutModalOpen(false); 
+    setLogoutModalOpen(false);
   };
 
   return (
@@ -98,207 +98,166 @@ const Navbar = () => {
           {/* Menu Toggle */}
           <div className="relative">
             <TiThMenuOutline
-              className="text-xl cursor-pointer"
+              className="text-xl cursor-pointer active:text-color-primary"
               onClick={() => { setMenuOpen(!menuOpen); setUserOpen(false); }}
             />
-            {/* {menuOpen && (
-              <div className="absolute right-[-80] bg-white text-black shadow-lg w-50 mt-3 rounded-md">
+            {menuOpen && (
+              <div className="absolute right-[-80px] bg-white text-black shadow-lg w-50 mt-3 rounded-md">
                 <ul>
-                  <li className="p-2 w-50 dropdown-menu">
-                    <Link href="/account"
-                      onClick={() => { setMenuOpen(false); }}
-                    >
-                      Computer and tablets
+                  {/* Main Menu Items */}
+                  <li className="p-2 w-50 dropdown-menu group relative">
+                    <Link href="/browse" onClick={() => { setMenuOpen(false); }}>
+                      Computer and Tablets
                     </Link>
+                    {/* Sub-menu for Computers and Tablets */}
+                    <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
+                      <ul>
+                        <li className="p-2 dropdown-menu group relative active:text-color-primary">
+                          <Link href="/browse" onClick={() => { setMenuOpen(false); }}>
+                            Laptops
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/brose" onClick={() => { setMenuOpen(false); }}>
+                            Tablets
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/macbooks" onClick={() => { setMenuOpen(false); }}>
+                            Macbooks
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/computers" onClick={() => { setMenuOpen(false); }}>
+                            Computers
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
                   </li>
-                   <li className="p-2 dropdown-menu">
-                    <Link href="/account"
-                      onClick={() => { setMenuOpen(false); }}
-                    >
+                  <li className="p-2 dropdown-menu group relative">
+                    <Link href="/account" onClick={() => { setMenuOpen(false); }}>
                       Home Appliances
                     </Link>
+                    {/* Sub-menu for Computers and Tablets */}
+                    <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
+                      <ul>
+                        <li className="p-2 dropdown-menu group relative ">
+                          <Link href="/laptops" onClick={() => { setMenuOpen(false); }}>
+                            Laptops
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/tablets" onClick={() => { setMenuOpen(false); }}>
+                            Tablets
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/macbooks" onClick={() => { setMenuOpen(false); }}>
+                            Macbooks
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/computers" onClick={() => { setMenuOpen(false); }}>
+                            Computers
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
                   </li>
-                   <li className="p-2 dropdown-menu">
-                    <Link href="/account"
-                      onClick={() => { setMenuOpen(false); }}
-                    >
+                  <li className="p-2 dropdown-menu group relative">
+                    <Link href="/account" onClick={() => { setMenuOpen(false); }}>
                       Audio and Video
                     </Link>
+                    {/* Sub-menu for Computers and Tablets */}
+                    <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
+                      <ul>
+                        <li className="p-2 dropdown-menu group relative active:text-color-primary">
+                          <Link href="/laptops" onClick={() => { setMenuOpen(false); }}>
+                            Laptops
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/tablets" onClick={() => { setMenuOpen(false); }}>
+                            Tablets
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/macbooks" onClick={() => { setMenuOpen(false); }}>
+                            Macbooks
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/computers" onClick={() => { setMenuOpen(false); }}>
+                            Computers
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
                   </li>
-                  <li className="p-2 dropdown-menu">
-                    <Link href="/account"
-                      onClick={() => { setMenuOpen(false); }}
-                    >
+                  <li className="p-2 dropdown-menu group relative">
+                    <Link href="/account" onClick={() => { setMenuOpen(false); }}>
                       Phones and Wearable
                     </Link>
+                    {/* Sub-menu for Computers and Tablets */}
+                    <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
+                      <ul>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/laptops" onClick={() => { setMenuOpen(false); }}>
+                            Laptops
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/tablets" onClick={() => { setMenuOpen(false); }}>
+                            Tablets
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/macbooks" onClick={() => { setMenuOpen(false); }}>
+                            Macbooks
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/computers" onClick={() => { setMenuOpen(false); }}>
+                            Computers
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
                   </li>
-                  <li className="p-2 dropdown-menu">
-                    <Link href="/account"
-                      onClick={() => { setMenuOpen(false); }}
-                    >
+                  <li className="p-2 dropdown-menu group relative">
+                    <Link href="/account" onClick={() => { setMenuOpen(false); }}>
                       Televisions
                     </Link>
+                    {/* Sub-menu for Computers and Tablets */}
+                    <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
+                      <ul>
+                        <li className="p-2 dropdown-menu group relative active:text-color-primary">
+                          <Link href="/laptops" onClick={() => { setMenuOpen(false); }}>
+                            Laptops
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/tablets" onClick={() => { setMenuOpen(false); }}>
+                            Tablets
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/macbooks" onClick={() => { setMenuOpen(false); }}>
+                            Macbooks
+                          </Link>
+                        </li>
+                        <li className="p-2 dropdown-menu group relative">
+                          <Link href="/computers" onClick={() => { setMenuOpen(false); }}>
+                            Computers
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
                   </li>
                 </ul>
               </div>
-            )} */}
-            {menuOpen && (
-        <div className="absolute right-[-80px] bg-white text-black shadow-lg w-50 mt-3 rounded-md">
-          <ul>
-            {/* Main Menu Items */}
-            <li className="p-2 w-50 dropdown-menu group relative">
-              <Link href="/account" onClick={() => { setMenuOpen(false); }}>
-                Computer and Tablets
-              </Link>
-              {/* Sub-menu for Computers and Tablets */}
-              <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
-                <ul>
-                  <li className="p-2 dropdown-menu group relative active:text-color-primary">
-                    <Link href="/laptops" onClick={() => { setMenuOpen(false); }}>
-                      Laptops
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/tablets" onClick={() => { setMenuOpen(false); }}>
-                      Tablets
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/macbooks" onClick={() => { setMenuOpen(false); }}>
-                      Macbooks
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/computers" onClick={() => { setMenuOpen(false); }}>
-                      Computers
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li className="p-2 dropdown-menu group relative">
-              <Link href="/account" onClick={() => { setMenuOpen(false); }}>
-                Home Appliances
-              </Link>
-                {/* Sub-menu for Computers and Tablets */}
-              <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
-                <ul>
-                  <li className="p-2 dropdown-menu group relative ">
-                    <Link href="/laptops" onClick={() => { setMenuOpen(false); }}>
-                      Laptops
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/tablets" onClick={() => { setMenuOpen(false); }}>
-                      Tablets
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/macbooks" onClick={() => { setMenuOpen(false); }}>
-                      Macbooks
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/computers" onClick={() => { setMenuOpen(false); }}>
-                      Computers
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li className="p-2 dropdown-menu group relative">
-              <Link href="/account" onClick={() => { setMenuOpen(false); }}>
-                Audio and Video
-              </Link>
-                {/* Sub-menu for Computers and Tablets */}
-              <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
-                <ul>
-                  <li className="p-2 dropdown-menu group relative active:text-color-primary">
-                    <Link href="/laptops" onClick={() => { setMenuOpen(false); }}>
-                      Laptops
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/tablets" onClick={() => { setMenuOpen(false); }}>
-                      Tablets
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/macbooks" onClick={() => { setMenuOpen(false); }}>
-                      Macbooks
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/computers" onClick={() => { setMenuOpen(false); }}>
-                      Computers
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li className="p-2 dropdown-menu group relative">
-              <Link href="/account" onClick={() => { setMenuOpen(false); }}>
-                Phones and Wearable
-              </Link>
-                {/* Sub-menu for Computers and Tablets */}
-              <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
-                <ul>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/laptops" onClick={() => { setMenuOpen(false); }}>
-                      Laptops
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/tablets" onClick={() => { setMenuOpen(false); }}>
-                      Tablets
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/macbooks" onClick={() => { setMenuOpen(false); }}>
-                      Macbooks
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/computers" onClick={() => { setMenuOpen(false); }}>
-                      Computers
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li className="p-2 dropdown-menu group relative">
-              <Link href="/account" onClick={() => { setMenuOpen(false); }}>
-                Televisions
-              </Link>
-                {/* Sub-menu for Computers and Tablets */}
-              <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
-                <ul>
-                  <li className="p-2 dropdown-menu group relative active:text-color-primary">
-                    <Link href="/laptops" onClick={() => { setMenuOpen(false); }}>
-                      Laptops
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/tablets" onClick={() => { setMenuOpen(false); }}>
-                      Tablets
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/macbooks" onClick={() => { setMenuOpen(false); }}>
-                      Macbooks
-                    </Link>
-                  </li>
-                  <li className="p-2 dropdown-menu group relative">
-                    <Link href="/computers" onClick={() => { setMenuOpen(false); }}>
-                      Computers
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-      )}
+            )}
           </div>
 
           {/* User Profile */}
@@ -379,7 +338,7 @@ const Navbar = () => {
               Cancel
             </button>
             <button
-              onClick={() => {handleLogout(); setLogoutModalOpen(false); }}
+              onClick={() => { handleLogout(); setLogoutModalOpen(false); }}
               className="mt-4 text-sm text-red-600 hover:underline"
             >
               Logout

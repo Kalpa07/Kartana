@@ -3,7 +3,7 @@
 
 :root {
   --color-primary: #1CD9A9 !important;
-  --secondary: #0F5C4A !important;
+  --color-secondary: #0F5C4A !important;
   --color-grey: #1E1E1E !important;
   --neutral: #5C5C5C !important;
   --accent: #D91C4A !important;
@@ -18,7 +18,7 @@
   }
 
   .bg-secondary-color {
-    background-color: var(--secondary) !important;
+    background-color: var(--color-secondary) !important;
   }
 
   .bg-grey {
@@ -34,19 +34,19 @@
   }
 
   .text-color-primary {
-    color: var(--color-primary);
+    color: var(--color-primary) !important;
   }
 
-  .text-secondary {
-    color: var(--secondary);
+  .text-secondary-color {
+    color: var(--color-secondary) !important;
   }
 
   .text-base {
     color: var(--color-grey);
   }
 
-  .text-neutral {
-    color: var(--neutral);
+  .text-color-neutral {
+    color: var(--neutral) !important; 
   }
 
   .text-accent {

@@ -1,8 +1,8 @@
-import Header from "../components/Header";
-import CategoryBar from "../components/CategoryBar";
-import Deals from "../components/Deals";
-import Brands from "../components/Brands";
-import Exclusives from "../components/Exclusives";
+import Header from "../components/homepage/Header";
+import CategoryBar from "../components/homepage/CategoryBar";
+import Deals from "../components/homepage/Deals";
+import Brands from "../components/homepage/Brands";
+import Exclusives from "../components/homepage/Exclusives";
 
 const Home = () => {
   return (

@@ -1,9 +1,16 @@
+import Breadcrumb from "../../components/browse/Breadcrumb";
+import Listing from "../../components/browse/Listing";
 
 const Browse = () => {
   return (
-    <div>
-      
+    <>
+    <div className="bg-grey">
+      <Breadcrumb/>
     </div>
+    <div className="bg-color-neutral">
+      <Listing/>
+    </div>
+    </>
   )
 }
 
