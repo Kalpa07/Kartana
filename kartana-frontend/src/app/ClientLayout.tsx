@@ -10,7 +10,6 @@ import { Provider as ReduxProvider } from "react-redux";
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  // Define routes where Navbar/Footer should be hidden
   const hideLayout = pathname.startsWith("/auth");
 
   return (

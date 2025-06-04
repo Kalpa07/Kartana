@@ -13,12 +13,11 @@ const Listing = () => {
         const res = await fetch('https://fakestoreapi.com/products');
         const data = await res.json();
 
-        // Optional: Filter to include only relevant "mocked" categories
         const filtered = data.filter((product) =>
           product.title.toLowerCase().includes('laptop') ||
           product.title.toLowerCase().includes('macbook') ||
           product.title.toLowerCase().includes('tablet') ||
-          product.category === 'electronics' // as fallback
+          product.category === 'electronics'
         );
 
         setProducts(filtered);

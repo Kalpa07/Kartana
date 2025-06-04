@@ -17,14 +17,14 @@ const SignUp = () => {
     const timer = setTimeout(() => {
       setError("");
       setSuccess("");
-    }, 12000); // 12 seconds
+    }, 12000);
 
     return () => clearTimeout(timer);
   }, [error, success]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
+    setFormData((prev) => ({ ...prev, [id]: value, cart:[] }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,7 +48,6 @@ const SignUp = () => {
     }
   
     try {
-      // 1. Check if user already exists
       const checkRes = await fetch(`http://localhost:3001/users?email=${email}`);
       const existing = await checkRes.json();
   
@@ -58,16 +57,15 @@ const SignUp = () => {
         return;
       }
   
-      // 2. Proceed with account creation
       const res = await fetch("http://localhost:3001/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, lastName, email, password }),
+        body: JSON.stringify({ firstName, lastName, email, password}),
       });
   
       if (!res.ok) throw new Error("Failed to create user");
   
-      setFormData({ firstName: "", lastName: "", email: "", password: "", confirmPassword: "" });
+      setFormData({ firstName: "", lastName: "", email: "", password: "", confirmPassword: ""});
       router.push("/auth/signin")
       setSuccess("Account created!");
     } catch (err) {

@@ -9,7 +9,7 @@ import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
-  console.log(session, status);
+  console.log(session);
 
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [area, setArea] = useState("Goa, 403506");

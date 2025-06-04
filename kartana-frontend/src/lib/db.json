@@ -5,21 +5,37 @@
       "firstName": "User",
       "lastName": "First",
       "email": "userTest@gmail.com",
-      "password": "12345678"
+      "password": "12345678",
+      "cart": []
     },
     {
       "id": "b89a",
       "firstName": "Kalpa",
       "lastName": "Teli",
       "email": "kalpateli@gmail.com",
-      "password": "1234567"
+      "password": "1234567",
+      "cart": [
+        {
+          "title": "WD 2TB Elements Portable External Hard Drive - USB 3.0 ",
+          "price": 64,
+          "image": "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg",
+          "quantity": 2
+        },
+        {
+          "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+          "price": 109.95,
+          "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+          "quantity": 3
+        }
+      ]
     },
     {
       "id": "f539",
       "firstName": "User",
       "lastName": "Second",
       "email": "userabc@gmail.com",
-      "password": "1234567"
+      "password": "1234567",
+      "cart": []
     }
   ]
 }
