@@ -4,10 +4,8 @@ import Listing from "../../components/browse/Listing";
 const Browse = () => {
   return (
     <>
-    <div className="bg-grey">
-      <Breadcrumb/>
-    </div>
     <div className="bg-color-neutral">
+      <Breadcrumb/>
       <Listing/>
     </div>
     </>
