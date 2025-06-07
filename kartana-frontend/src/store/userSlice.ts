@@ -1,16 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface User {
-  id: string | null;
-  name: string | null;
-  email: string | null;
-  isAuthenticated: boolean;
-}
+import {User} from "../lib/types";
 
 const initialState: User = {
-  id: null,
-  name: null,
-  email: null,
+  id: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  cart: [],
   isAuthenticated: false,
 };
 

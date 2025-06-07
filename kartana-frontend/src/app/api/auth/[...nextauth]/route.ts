@@ -1,6 +1,9 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import type { NextAuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
+import { JWT } from "next-auth/jwt"; // For typing the JWT
+import { Session } from "next-auth"; // For typing the session
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -31,6 +34,8 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           name: user.name,
           email: user.email,
+          cart: user.cart,  
+          orderHistory: user.orderHistory,  
         };
       },
     }),
@@ -40,23 +45,27 @@ export const authOptions: NextAuthOptions = {
     error: "/auth/signin",
   },
   session: {
-    strategy: "jwt",
+    strategy: "jwt" as const, 
   },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.cart = user.cart;  // Store cart in JWT token
+        token.orderHistory = user.orderHistory;  // Store order history in JWT token
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       if (session.user && token.id) {
         session.user.id = token.id as string;
+        session.user.cart = token.cart;  // Attach cart data to session
+        session.user.orderHistory = token.orderHistory;  // Attach order history data to session
       }
       return session;
     },
   },
 };
 
-const handler = NextAuth(authOptions);
+const handler = (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, authOptions);
 export { handler as GET, handler as POST };

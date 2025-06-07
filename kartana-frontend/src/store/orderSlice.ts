@@ -4,10 +4,10 @@ import axios from 'axios';
 const API = 'http://localhost:3000/users';
 
 interface OrderItem {
-  id: string;
-  name: string;
-  quantity: number;
+  title: string;
   price: number;
+  image: string;
+  quantity: number;
 }
 
 interface OrderState {
@@ -24,7 +24,7 @@ const initialState: OrderState = {
 
 export const placeOrder = createAsyncThunk(
   'order/place',
-  async ({ userId, orderHistory }: { userId: number; orderHistory: OrderItem[] }) => {
+  async ({ userId, orderHistory }: { userId: string; orderHistory: OrderItem[] }) => {
     const res = await axios.patch<{ orderHistory: OrderItem[] }>(`${API}/${userId}`, { orderHistory });
     return res.data.orderHistory;
   }

@@ -314,7 +314,7 @@ const Navbar = () => {
 
           {/* Shopping Cart */}
           <div className="relative">
-            <Link href="/#">
+            <Link href="/cart">
               <FaShoppingCart className="text-xl cursor-pointer" />
             </Link>
           </div>

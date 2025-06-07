@@ -30,3 +30,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     </SessionProvider>
   );
 }
+// json-server --watch src/lib/db.json --port 3001
+
+
