@@ -6,14 +6,14 @@ The goal is to allow users to purchase tech products using traditional payments 
 🚧 Status
 This project is currently under development. More features and details will be added soon.
 
-🔧 Tech Stack (Planned)
+Tech Stack (Planned)
 Frontend: Next.js, TailwindCSS
 
 Backend: Node.js, Express, MongoDB
 
 Web3: Solidity, ethers.js, MetaMask, IPFS
 
-📁 Project Structure (WIP)
+Project Structure (WIP)
 /frontend — Next.js app
 
 /backend — API server
