@@ -48,7 +48,7 @@ const SignUp = () => {
     }
   
     try {
-      const checkRes = await fetch(`http://localhost:3001/users?email=${email}`);
+      const checkRes = await fetch(`http://localhost:5000/users?email=${email}`);
       const existing = await checkRes.json();
   
       if (existing.length > 0) {
@@ -57,7 +57,7 @@ const SignUp = () => {
         return;
       }
   
-      const res = await fetch("http://localhost:3001/users", {
+      const res = await fetch("http://localhost:5000/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ firstName, lastName, email, password}),

@@ -55,7 +55,7 @@
           ],
           "total": 200
         }
-  ]
+      ]
     },
     {
       "id": "f539",
@@ -78,6 +78,15 @@
           "total": 200
         }
       ]
+    },
+    {
+      "id": "d354",
+      "firstName": "abcde",
+      "lastName": "xyz",
+      "email": "xyz@gmail.com",
+      "password": "87654321",
+      "cart": [],
+      "orderHistory": []
     }
   ]
 }
