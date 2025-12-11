@@ -1,28 +1,13 @@
 import express from "express";
-import { ApolloServer } from "apollo-server-express";
-import mongoose from "mongoose";
-import typeDefs from "./graphql/schema.js";
-import resolvers from "./graphql/resolvers.js";
+import dotenv from "dotenv";
+import { connectDB } from "./config/db.js";
 
-const startServer = async () => {
-  const app = express();
+dotenv.config();
 
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-  });
+const app = express();
 
-  await server.start();
-  server.applyMiddleware({ app });
+connectDB();
 
-  await mongoose.connect("mongodb://localhost:27017/kartana", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-
-  app.listen(4000, () => {
-    console.log("Server running at http://localhost:4000/graphql");
-  });
-};
-
-startServer();
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on port ${process.env.PORT}`);
+});
