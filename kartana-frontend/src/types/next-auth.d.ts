@@ -4,7 +4,8 @@ declare module "next-auth" {
   interface Session {
     user: {
       id: string;
-      name: string;
+      firstName: string;
+      lastName: string;
       email: string;
       cart?: CartItem[];
       orderHistory?: Order[];
@@ -13,7 +14,8 @@ declare module "next-auth" {
 
   interface User {
     id: string;
-    name: string;
+    firstName: string;
+    lastName:string;
     email: string;
     cart?: CartItem[];
     orderHistory?: Order[];

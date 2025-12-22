@@ -5,7 +5,6 @@ export interface User {
   email: string;
   cart: Product[];
   isAuthenticated: boolean;
-
 }
 
 export interface Product {
@@ -13,7 +12,7 @@ export interface Product {
   title: string;
   price: number;
   image: string;
-  quantity: number; 
+  quantity: number;
 }
 
 export interface CartItem {

@@ -1,5 +1,6 @@
+// store/userSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {User} from "../lib/types";
+import { User } from "../lib/types";
 
 const initialState: User = {
   id: '',
@@ -15,7 +16,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<User>) {
-      return { ...state, ...action.payload };
+      return { ...state, ...action.payload, isAuthenticated: true };
     },
     logout() {
       return initialState;
