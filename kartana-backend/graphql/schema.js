@@ -1,10 +1,6 @@
 import { gql } from "apollo-server-express";
 
 const typeDefs = gql`
-
-  # ============================
-  # User Types
-  # ============================
   type User {
     id: ID!
     firstName: String!
@@ -36,9 +32,6 @@ const typeDefs = gql`
     password: String!
   }
 
-  # ============================
-  # Product Types
-  # ============================
   type Rating {
     rate: Float
     count: Int
@@ -62,30 +55,18 @@ const typeDefs = gql`
     category: String
   }
 
-  # ============================
-  # Root Queries
-  # ============================
   type Query {
-    # User Queries
     users: [User]
     userByEmail(email: String!): User
-
-    # Product Queries
     products: [Product]
     product(id: ID!): Product
   }
 
-  # ============================
-  # Root Mutations
-  # ============================
   type Mutation {
-    # User Mutations
     createUser(data: CreateUserInput!): User
-
-    # Product Mutations
     createProduct(data: ProductInput!): Product
+    login(email: String!, password: String!): User
   }
-
 `;
 
 export default typeDefs;
