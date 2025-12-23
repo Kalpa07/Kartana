@@ -8,6 +8,11 @@ const resolvers = {
     userByEmail: async (_, { email }) => await Users.findOne({ email }),
     products: async () => await Products.find(),
     product: async (_, { id }) => await Products.findById(id),
+
+    getCart: async (_, { userId }) => {
+      const user = await Users.findById(userId);
+      return user.cart;
+    },
   },
 
   Mutation: {
@@ -37,6 +42,44 @@ const resolvers = {
         firstName: user.firstName,
         lastName: user.lastName,
       };
+    },
+
+
+    addToCart: async (_, { userId, title, price, image, quantity }) => {
+      const user = await Users.findById(userId);
+
+      const existingItem = user.cart.find(item => item.title === title);
+
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        user.cart.push({ title, price, image, quantity });
+      }
+
+      await user.save();
+      return user.cart;
+    },
+
+    updateCartQuantity: async (_, { userId, title, quantity }) => {
+      const user = await Users.findById(userId);
+
+      user.cart = user.cart.map(item =>
+        item.title === title
+          ? { ...item.toObject(), quantity }
+          : item
+      );
+
+      await user.save();
+      return user.cart;
+    },
+
+    removeFromCart: async (_, { userId, title }) => {
+      const user = await Users.findById(userId);
+
+      user.cart = user.cart.filter(item => item.title !== title);
+
+      await user.save();
+      return user.cart;
     },
   },
 };

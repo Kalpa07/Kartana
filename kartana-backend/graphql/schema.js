@@ -12,10 +12,10 @@ const typeDefs = gql`
   }
 
   type CartItem {
-    title: String
-    price: Float
+    title: String!
+    price: Float!
     image: String
-    quantity: Int
+    quantity: Int!
   }
 
   type Order {
@@ -60,13 +60,34 @@ const typeDefs = gql`
     userByEmail(email: String!): User
     products: [Product]
     product(id: ID!): Product
+
+    getCart(userId: ID!): [CartItem]
   }
 
   type Mutation {
     createUser(data: CreateUserInput!): User
     createProduct(data: ProductInput!): Product
     login(email: String!, password: String!): User
-  }
+
+    addToCart(
+      userId: ID!
+      title: String!
+      price: Float!
+      image: String
+      quantity: Int!
+    ): [CartItem]
+
+    updateCartQuantity(
+      userId: ID!
+      title: String!
+      quantity: Int!
+    ): [CartItem]
+
+    removeFromCart(
+      userId: ID!
+      title: String!
+    ): [CartItem]
+    }
 `;
 
 export default typeDefs;
