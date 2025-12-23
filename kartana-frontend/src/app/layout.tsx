@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
+import ModalProvider from "@/components/ModalProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,6 +33,7 @@ export default function RootLayout({
         className="font-body antialiased  bg-base text-white"
         suppressHydrationWarning
       >
+        <ModalProvider />
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
