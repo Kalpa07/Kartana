@@ -1,16 +1,12 @@
 "use client";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { removeFromCart } from "../../store/cartSlice";
 import Image from "next/image";
 
-// Assuming `cartItems` has a type like { id: string, title: string, price: number, quantity: number, image: string }
 const CartProducts = () => {
-  const cartItems = useSelector((state) => state.cart || []);
-  console.log(cartItems);  // Log cart items to see what you're getting
-
-  const total = Array.isArray(cartItems)
-    ? cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-    : 0;
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart);
 
   if (!cartItems.length) {
     return (
@@ -22,11 +18,9 @@ const CartProducts = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <h2 className="text-2xl font-bold">Your Cart</h2>
-
       {cartItems.map((item) => (
         <div
-          key={item.id}  // Use a unique key like item.id if available
+          key={item.title}   // ✅ CONSISTENT WITH YOUR SLICE
           className="flex items-center justify-between border-b pb-4"
         >
           <div className="flex items-center gap-4">
@@ -37,20 +31,23 @@ const CartProducts = () => {
               height={80}
               className="rounded object-cover"
             />
+
             <div>
               <h3 className="text-lg font-semibold">{item.title}</h3>
-              <p className="text-gray-600">₹ {item.price} x {item.quantity}</p>
+              <p className="text-gray-600">
+                ₹ {item.price} × {item.quantity}
+              </p>
             </div>
           </div>
+
+          <button
+            onClick={() => dispatch(removeFromCart(item.title))}
+            className="text-red-500 text-sm"
+          >
+            Remove
+          </button>
         </div>
       ))}
-
-      <div className="mt-8 text-right border-t pt-4">
-        <p className="text-xl font-semibold">Total: ₹ {total.toFixed(2)}</p>
-        <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-          Checkout
-        </button>
-      </div>
     </div>
   );
 };

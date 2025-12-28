@@ -21,7 +21,6 @@ const Card = ({ title, price, description, image, rate }) => {
 
     const added = quantity > 0;
 
-    // 🔹 Fetch quantity from backend on mount
     useEffect(() => {
         if (!userId) return;
 
@@ -101,7 +100,6 @@ const Card = ({ title, price, description, image, rate }) => {
         }
     };
 
-    // 🔹 Increment quantity
     const increment = async () => {
         const newQty = quantity + 1;
         setQuantity(newQty);
@@ -125,7 +123,6 @@ const Card = ({ title, price, description, image, rate }) => {
         dispatch(updateQuantity({ title, quantity: newQty }));
     };
 
-    // 🔹 Decrement quantity
     const decrement = async () => {
         if (quantity > 1) {
             const newQty = quantity - 1;
