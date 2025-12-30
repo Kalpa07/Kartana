@@ -61,13 +61,15 @@ const Navbar = () => {
       className="flex flex-row items-center justify-between p-x-5 h-[50px] bg-grey text-white"
     >
       <div className="w-28 h-10 relative ml-5 flex items-center">
-        <Image
-          src="/images/Kartana.png"
-          alt="Kartana Logo"
-          width={112}
-          height={40}
-          className="object-contain"
-        />
+        <Link href="/">
+          <Image
+            src="/images/Kartana.png"
+            alt="Kartana Logo"
+            width={112}
+            height={40}
+            className="object-contain"
+          />
+        </Link>
       </div>
       <div className="flex flex-row">
         <div className="hidden md:flex w-80 mr-5 bg-white rounded-full overflow-hidden border border-gray-300">

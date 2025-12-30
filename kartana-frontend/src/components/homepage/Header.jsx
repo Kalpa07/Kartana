@@ -30,7 +30,6 @@ const Header = () => {
   return (
     <div className="bg-grey text-white px-4 md:px-10 py-10 md:py-20">
       <div className="flex flex-col md:flex-row items-center justify-between gap-10">
-        {/* Text Content */}
         <div className="w-full md:w-1/2 text-center md:text-left space-y-5">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
             {slides[current].textTitle}
@@ -72,9 +71,8 @@ const Header = () => {
           <button
             key={i}
             onClick={() => handleDotClick(i)}
-            className={`h-3 w-3 rounded-full transition-all duration-300 ${
-              i === current ? 'bg-white scale-125' : 'bg-color-neutral'
-            }`}
+            className={`h-3 w-3 rounded-full transition-all duration-300 ${i === current ? 'bg-white scale-125' : 'bg-color-neutral'
+              }`}
             aria-label={`Slide ${i + 1}`}
           />
         ))}

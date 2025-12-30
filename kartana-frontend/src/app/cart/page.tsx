@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { setCart, updateQuantity, removeFromCart } from "@/store/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { FaTrash } from "react-icons/fa";
 
 interface CartItem {
   title: string;
@@ -72,8 +73,25 @@ const CartPage = () => {
           {cart.map((item: CartItem) => (
             <div
               key={item.title}
-              className="flex items-center gap-4 border-b pb-4 last:border-b-0"
+              className="relative flex items-center gap-4 border-b pb-4 last:border-b-0"
             >
+              <div className="absolute top-3 right-3 flex flex-col items-end gap-10">
+                <button
+                  className="text-gray-400 hover:text-red-500"
+                  onClick={async () => {
+                    await removeItem(userId, item.title);
+                    dispatch(removeFromCart(item.title));
+                  }}
+                  aria-label="Remove item"
+                  title="Remove item"
+                >
+                  <FaTrash size={16} />
+                </button>
+
+                <span className="text-xl text-white-300 font-semibold">
+                  ₹ {(item.price * item.quantity).toFixed(2)}
+                </span>
+              </div>
               <img src={item.image} className="w-24 h-24 rounded" />
 
               <div className="flex-1">
@@ -98,6 +116,7 @@ const CartPage = () => {
                         );
                       }
                     }}
+                    title="Decrease"
                   >
                     -
                   </button>
@@ -113,6 +132,7 @@ const CartPage = () => {
                         updateQuantity({ title: item.title, quantity: newQty })
                       );
                     }}
+                    title="Increase"
                   >
                     +
                   </button>
@@ -145,7 +165,7 @@ const CartPage = () => {
             </div>
           </div>
 
-          <button className="mt-6 w-full bg-blue-600 py-3 rounded hover:bg-blue-700">
+          <button className="mt-6 w-full bg-color-primary font-semibold text-lg text-white py-3 rounded hover:opacity-90">
             Proceed to Checkout
           </button>
         </div>
