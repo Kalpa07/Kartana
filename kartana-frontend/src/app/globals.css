@@ -82,4 +82,26 @@
 button {
   cursor: pointer;
 }
+
+.custom-modal-overlay {
+position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 50;
+}
+
+.custom-modal-content {
+  background-color: white;
+  border-radius:  8px ;
+  padding: 24px;
+  max-width: 500px;
+  margin: 2px;;
+  outline: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  
+}
+
 }

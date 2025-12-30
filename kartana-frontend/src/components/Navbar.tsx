@@ -95,24 +95,31 @@ const Navbar = () => {
             <Modal
               isOpen={locationModalOpen}
               onRequestClose={closeLocationModal}
-              className="modal"
-              overlayClassName="overlay"
+              className="custom-modal-content"
+              overlayClassName="custom-modal-overlay"
             >
-              <div>
-                <h2>Select Area</h2>
-                <ul>
-                  <li onClick={() => handleAreaSelection("Goa, 403506")}>
-                    Goa, 403506
-                  </li>
-                  <li onClick={() => handleAreaSelection("Mumbai, 400001")}>
-                    Mumbai, 400001
-                  </li>
-                  <li onClick={() => handleAreaSelection("Delhi, 110001")}>
-                    Delhi, 110001
-                  </li>
-                </ul>
-                <button onClick={closeLocationModal}>Close</button>
-              </div>
+              <h2 className="text-xl font-semibold mb-4 text-gray-800">
+                Select Area
+              </h2>
+              <ul className="space-y-3">
+                {["Goa, 403506", "Mumbai, 400001", "Delhi, 110001"].map(
+                  (item) => (
+                    <li
+                      key={item}
+                      onClick={() => handleAreaSelection(item)}
+                      className="p-3 rounded-lg cursor-pointer hover:bg-gray-200 text-gray-700 font-medium transition"
+                    >
+                      {item}
+                    </li>
+                  )
+                )}
+              </ul>
+              <button
+                onClick={closeLocationModal}
+                className="mt-5 w-full py-2 bg-gray-600 hover:bg-gray-500 hover:text-black rounded-lg font-medium transition"
+              >
+                Close
+              </button>
             </Modal>
           </div>
 
