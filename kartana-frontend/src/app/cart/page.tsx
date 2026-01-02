@@ -68,7 +68,7 @@ const CartPage = () => {
       <h1 className="text-3xl font-bold mb-6">My Cart</h1>
 
       <div className="flex gap-8">
-        {/* LEFT – CART ITEMS */}
+        {/* LEFT – Cart Items */}
         <div className="w-2/3 bg-gray-800 p-6 rounded-lg shadow space-y-4">
           {cart.map((item: CartItem) => (
             <div
@@ -142,7 +142,7 @@ const CartPage = () => {
           ))}
         </div>
 
-        {/* RIGHT – ORDER SUMMARY */}
+        {/* RIGHT – Order Summary */}
         <div className="w-1/3 bg-gray-800 p-6 rounded-lg shadow h-fit">
           <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
 
@@ -176,9 +176,7 @@ const CartPage = () => {
 
 export default CartPage;
 
-// ------------------
 // GraphQL helpers
-// ------------------
 async function updateQty(userId: string, title: string, quantity: number) {
   await fetch("http://localhost:4000/graphql", {
     method: "POST",

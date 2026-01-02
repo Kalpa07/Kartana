@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/store/userSlice";
+import { signIn } from "next-auth/react";
 import Toast from "@/components/Toast";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,7 +13,6 @@ const SignIn = () => {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -34,38 +32,29 @@ const SignIn = () => {
       return;
     }
 
-    try {
-      const res = await fetch("http://localhost:4000/graphql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: `
-            mutation Login($email: String!, $password: String!) {
-              login(email: $email, password: $password) {
-                id
-                email
-                firstName
-                lastName
-              }
-            }
-          `,
-          variables: { email, password },
-        }),
-      });
-      const result = await res.json();
-      const user = result.data.login;
-      dispatch(setUser({ ...user }));
-      sessionStorage.setItem("loggedin", "true");
-      sessionStorage.setItem("userData", JSON.stringify(user));
-      setSuccess("Signed in successfully!");
-      router.push("/"); // redirect
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      setError(result.error);
       setLoading(false);
-    } catch (err) {
-      console.error(err);
-      sessionStorage.setItem("loggedin", "false");
-      setError("Something went wrong");
-      setLoading(false);
+      return;
     }
+
+    setSuccess("Signed in successfully!");
+    sessionStorage.setItem("loggedin", "true");
+
+    // get user data from session (next-auth - inbuilt)
+    const session = await fetch("/api/auth/session").then((res) => res.json());
+
+    if (session?.user) {
+      sessionStorage.setItem("userData", JSON.stringify(session.user));
+    }
+
+    router.push("/");
   };
 
   return (
@@ -102,9 +91,6 @@ const SignIn = () => {
           <h2 className="text-2xl font-semibold text-white text-center">
             Sign In
           </h2>
-
-          {/* {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-                    {success && <p className="text-green-500 text-sm text-center">{success}</p>} */}
 
           <Toast message={error} type="error" show={!!error} />
           <Toast message={success} type="success" show={!!success} />

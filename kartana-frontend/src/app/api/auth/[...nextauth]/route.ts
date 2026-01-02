@@ -2,6 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
 import { Session } from "next-auth";
+import { apiLogin } from "@/api/api";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -17,40 +18,12 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Email and password are required");
         }
 
-        // 🔹 Call GraphQL backend (MongoDB)
-        const res = await fetch("http://localhost:4000/graphql", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            query: `
-              mutation Login($email: String!, $password: String!) {
-                login(email: $email, password: $password) {
-                  id
-                  email
-                  firstName
-                  lastName
-                  cart
-                  orderHistory
-                }
-              }
-            `,
-            variables: {
-              email: credentials.email,
-              password: credentials.password,
-            },
-          }),
-        });
+        const user = await apiLogin(
+          credentials.email,
+          credentials.password
+        );
 
-        const json = await res.json();
-
-        if (json.errors) {
-          throw new Error(json.errors[0].message);
-        }
-
-        // ✅ Return user object (Mongo user)
-        return json.data.login;
+        return user;
       },
     }),
   ],
