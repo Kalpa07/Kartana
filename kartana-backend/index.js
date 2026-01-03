@@ -6,7 +6,6 @@ import dotenv from "dotenv";
 import typeDefs from "./graphql/schema.js";
 import resolvers from "./graphql/resolvers.js";
 
-// Load .env variables
 dotenv.config();
 
 const startServer = async () => {
