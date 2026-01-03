@@ -47,7 +47,6 @@ const SignIn = () => {
     setSuccess("Signed in successfully!");
     sessionStorage.setItem("loggedin", "true");
 
-    // get user data from session (next-auth - inbuilt)
     const session = await fetch("/api/auth/session").then((res) => res.json());
 
     if (session?.user) {

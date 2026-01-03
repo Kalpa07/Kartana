@@ -31,7 +31,6 @@ const Card = ({ title, price, description, image, rate }) => {
 
     const added = quantity > 0;
 
-    // 🔹 Fetch cart on mount to populate Redux (fix refresh issue)
     useEffect(() => {
         if (!userId) return;
 
@@ -47,7 +46,6 @@ const Card = ({ title, price, description, image, rate }) => {
         fetchCartOnMount();
     }, [userId, dispatch]);
 
-    // 🔹 Sync local quantity from Redux cart
     useEffect(() => {
         const existingItem = cart.find((item) => item.title === title);
         setQuantity(existingItem ? existingItem.quantity : 0);

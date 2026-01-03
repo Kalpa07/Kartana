@@ -135,7 +135,6 @@ const Navbar = () => {
             {menuOpen && (
               <div className="absolute right-[-80px] bg-white text-black shadow-lg w-50 mt-3 rounded-md">
                 <ul>
-                  {/* Main Menu Items */}
                   <li className="p-2 w-50 dropdown-menu group relative">
                     <Link
                       href="/browse"
@@ -145,7 +144,6 @@ const Navbar = () => {
                     >
                       Computer and Tablets
                     </Link>
-                    {/* Sub-menu for Computers and Tablets */}
                     <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
                       <ul>
                         <li className="p-2 dropdown-menu group relative active:text-color-primary">
@@ -160,7 +158,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/brose"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -170,7 +168,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/macbooks"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -180,7 +178,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/computers"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -193,19 +191,18 @@ const Navbar = () => {
                   </li>
                   <li className="p-2 dropdown-menu group relative">
                     <Link
-                      href="/account"
+                      href="#"
                       onClick={() => {
                         setMenuOpen(false);
                       }}
                     >
                       Home Appliances
                     </Link>
-                    {/* Sub-menu for Computers and Tablets */}
                     <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
                       <ul>
                         <li className="p-2 dropdown-menu group relative ">
                           <Link
-                            href="/laptops"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -215,7 +212,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/tablets"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -225,7 +222,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/macbooks"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -235,7 +232,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/computers"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -248,19 +245,18 @@ const Navbar = () => {
                   </li>
                   <li className="p-2 dropdown-menu group relative">
                     <Link
-                      href="/account"
+                      href="/browse"
                       onClick={() => {
                         setMenuOpen(false);
                       }}
                     >
                       Audio and Video
                     </Link>
-                    {/* Sub-menu for Computers and Tablets */}
                     <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
                       <ul>
                         <li className="p-2 dropdown-menu group relative active:text-color-primary">
                           <Link
-                            href="/laptops"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -270,7 +266,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/tablets"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -280,7 +276,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/macbooks"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -290,7 +286,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/computers"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -303,19 +299,18 @@ const Navbar = () => {
                   </li>
                   <li className="p-2 dropdown-menu group relative">
                     <Link
-                      href="/account"
+                      href="/browse"
                       onClick={() => {
                         setMenuOpen(false);
                       }}
                     >
                       Phones and Wearable
                     </Link>
-                    {/* Sub-menu for Computers and Tablets */}
                     <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
                       <ul>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/laptops"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -325,7 +320,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/tablets"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -335,7 +330,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/macbooks"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -345,7 +340,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/computers"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -358,19 +353,18 @@ const Navbar = () => {
                   </li>
                   <li className="p-2 dropdown-menu group relative">
                     <Link
-                      href="/account"
+                      href="/browse"
                       onClick={() => {
                         setMenuOpen(false);
                       }}
                     >
                       Televisions
                     </Link>
-                    {/* Sub-menu for Computers and Tablets */}
                     <div className="absolute right-full  mr-0 top-0 mt-2 hidden group-hover:block bg-white shadow-lg w-40 h-auto rounded-md">
                       <ul>
                         <li className="p-2 dropdown-menu group relative active:text-color-primary">
                           <Link
-                            href="/laptops"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -380,7 +374,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/tablets"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -390,7 +384,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/macbooks"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -400,7 +394,7 @@ const Navbar = () => {
                         </li>
                         <li className="p-2 dropdown-menu group relative">
                           <Link
-                            href="/computers"
+                            href="/browse"
                             onClick={() => {
                               setMenuOpen(false);
                             }}
@@ -416,7 +410,6 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* User Profile */}
           <div className="relative">
             <FaUser
               className="text-xl cursor-pointer "
@@ -428,7 +421,7 @@ const Navbar = () => {
             {userOpen && (
               <div className="absolute right-[-50] bg-white text-black shadow-lg w-30 mt-3 rounded-md">
                 <ul>
-                  {status === true && (
+                  {/* {status === true && (
                     <li className="p-2 dropdown-menu">
                       <Link
                         href="/account"
@@ -439,7 +432,7 @@ const Navbar = () => {
                         My Account
                       </Link>
                     </li>
-                  )}
+                  )} */}
                   {status === false && (
                     <li className="p-2 dropdown-menu">
                       <Link

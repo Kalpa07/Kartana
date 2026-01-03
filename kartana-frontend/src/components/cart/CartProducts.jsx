@@ -20,7 +20,7 @@ const CartProducts = () => {
     <div className="p-6 space-y-6">
       {cartItems.map((item) => (
         <div
-          key={item.title}   // ✅ CONSISTENT WITH YOUR SLICE
+          key={item.title}
           className="flex items-center justify-between border-b pb-4"
         >
           <div className="flex items-center gap-4">

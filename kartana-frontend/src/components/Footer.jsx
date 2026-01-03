@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { FaArrowRight } from "react-icons/fa"; // Importing the arrow icon
-import { FaTwitter, FaLinkedin, FaInstagram, FaYoutube } from "react-icons/fa"; // Importing social icons
+import { FaArrowRight } from "react-icons/fa";
+import { FaTwitter, FaLinkedin, FaInstagram, FaYoutube } from "react-icons/fa";
 
 const footerLinks = [
     { label: "About Kartana", link: "#" },
@@ -36,8 +36,6 @@ const Footer = () => {
                         </button>
                     </div>
 
-
-                    {/* Social Media Icons */}
                     <div className="flex gap-10 mt-4">
                         <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400">
                             <FaTwitter className="text-2xl" />
@@ -54,15 +52,12 @@ const Footer = () => {
                     </div>
                 </div>
 
-
-                {/* Vertical Divider */}
                 <div className="w-px h-80 bg-color-neutral lg:block hidden mx-4" />
 
-                {/* Right Section - Useful Links and More Information */}
+                {/* Right Section */}
                 <div className="flex flex-col items-start space-y-6 w-full lg:w-1/2">
                     <div className="flex flex-col lg:flex-row gap-20 w-full">
 
-                        {/* Useful Links */}
                         <div className="flex flex-col space-y-2">
                             <h3 className="text-lg font-semibold">Useful Links</h3>
                             <ul className="space-y-2">
@@ -76,7 +71,6 @@ const Footer = () => {
                             </ul>
                         </div>
 
-                        {/* Additional Information */}
                         <div className="flex flex-col space-y-2">
                             <h3 className="text-lg font-semibold">More Information</h3>
                             <ul className="space-y-2">

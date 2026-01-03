@@ -1,5 +1,4 @@
-import { CartItem, Order } from "@/lib/types";  // Assuming types are defined in a separate file
-
+import { CartItem, Order } from "@/lib/types"; 
 declare module "next-auth" {
   interface Session {
     user: {

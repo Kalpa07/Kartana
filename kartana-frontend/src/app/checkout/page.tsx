@@ -63,7 +63,7 @@ const CheckoutPage = () => {
     try {
       await apiPlaceOrder(userId, cart, address);
 
-      dispatch(clearCart()); // clears Redux cart
+      dispatch(clearCart());
       router.push("/orders");
     } catch (err) {
       console.error("Failed to place order", err);
@@ -86,7 +86,6 @@ const CheckoutPage = () => {
       <div className="bg-gray-800 p-6 rounded-lg w-full max-w-lg mb-6">
         <h2 className="text-xl font-semibold mb-4">Delivery Address</h2>
 
-        {/* Add Address Button */}
         {!showAddressForm && !isAddressSaved && (
           <button
             onClick={() => setShowAddressForm(true)}
@@ -96,7 +95,6 @@ const CheckoutPage = () => {
           </button>
         )}
 
-        {/* Address Form */}
         {showAddressForm && (
           <div className="space-y-3">
             <input
@@ -153,7 +151,6 @@ const CheckoutPage = () => {
           </div>
         )}
 
-        {/* Read-only Address Card */}
         {isAddressSaved && !showAddressForm && (
           <div className="bg-gray-700 p-4 rounded space-y-1">
             <p className="font-semibold">{address.name}</p>

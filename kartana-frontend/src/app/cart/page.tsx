@@ -23,7 +23,6 @@ const CartPage = () => {
 
   const userId = userData?.id;
 
-  // 🔹 Fetch cart on mount
   useEffect(() => {
     if (!userId) return;
 
