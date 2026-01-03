@@ -1,55 +1,27 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-const API = 'http://localhost:5000/users';
-
-interface OrderItem {
-  title: string;
-  price: number;
-  image: string;
-  quantity: number;
-}
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { CartItem } from "../lib/types";
 
 interface OrderState {
-  orderHistory: OrderItem[];
-  loading: boolean;
-  error: string | null;
+  orderHistory: CartItem[][];
 }
 
 const initialState: OrderState = {
   orderHistory: [],
-  loading: false,
-  error: null,
 };
 
-export const placeOrder = createAsyncThunk(
-  'order/place',
-  async ({ userId, orderHistory }: { userId: string; orderHistory: OrderItem[] }) => {
-    const res = await axios.patch<{ orderHistory: OrderItem[] }>(`${API}/${userId}`, { orderHistory });
-    return res.data.orderHistory;
-  }
-);
-
-
 const orderSlice = createSlice({
-  name: 'order',
+  name: "order",
   initialState,
-  reducers: {},
-  extraReducers: builder => {
-    builder
-      .addCase(placeOrder.pending, state => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(placeOrder.fulfilled, (state, action) => {
-        state.orderHistory = action.payload;
-        state.loading = false;
-      })
-      .addCase(placeOrder.rejected, (state, action) => {
-        state.error = action.error.message ?? 'Failed to place order';
-        state.loading = false;
-      });
+  reducers: {
+    placeOrder(state, action: PayloadAction<CartItem[]>) {
+      state.orderHistory.push(action.payload);
+    },
+
+    clearOrders() {
+      return initialState;
+    },
   },
 });
 
+export const { placeOrder, clearOrders } = orderSlice.actions;
 export default orderSlice.reducer;

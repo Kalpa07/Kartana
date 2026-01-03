@@ -1,62 +1,62 @@
 "use client";
 
 import { useEffect } from "react";
-import { setCart, updateQuantity, removeFromCart } from "@/store/cartSlice";
+import { setCart } from "@/store/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { FaTrash } from "react-icons/fa";
-
-interface CartItem {
-  title: string;
-  price: number;
-  image: string;
-  quantity: number;
-}
+import {
+  apiGetCart,
+  apiUpdateCartQuantity,
+  apiRemoveFromCart,
+} from "@/api/api";
+import { useRouter } from "next/navigation";
 
 const CartPage = () => {
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.cart);
+  const router = useRouter();
 
   const userData =
     typeof window !== "undefined"
       ? JSON.parse(sessionStorage.getItem("userData") || "null")
       : null;
+
   const userId = userData?.id;
 
+  // 🔹 Fetch cart on mount
   useEffect(() => {
     if (!userId) return;
 
-    const fetchCart = async () => {
+    const loadCart = async () => {
       try {
-        const res = await fetch("http://localhost:4000/graphql", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            query: `
-              query GetCart($userId: ID!) {
-                getCart(userId: $userId) {
-                  title
-                  price
-                  image
-                  quantity
-                }
-              }
-            `,
-            variables: { userId },
-          }),
-        });
-
-        const result = await res.json();
-        dispatch(setCart(result?.data?.getCart || []));
+        const cartItems = await apiGetCart(userId);
+        dispatch(setCart(cartItems));
       } catch (err) {
         console.error("Failed to fetch cart:", err);
       }
     };
 
-    fetchCart();
+    loadCart();
   }, [userId, dispatch]);
 
+  const syncCart = async () => {
+    if (!userId) return;
+    try {
+      const cartItems = await apiGetCart(userId);
+      dispatch(setCart(cartItems));
+    } catch (err) {
+      console.error("Failed to sync cart:", err);
+    }
+  };
+
   if (!cart.length) {
-    return <p className="text-white text-center mt-10">Your cart is empty</p>;
+    return (
+      <div className="px-10 py-6 bg-neutral-900 text-white pt-24">
+        <div className="bg-gray-800 p-6 rounded-lg shadow">
+          <p className="text-center py-10">Your cart is empty</p>
+        </div>
+      </div>
+    );
   }
 
   const subtotal = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
@@ -70,53 +70,47 @@ const CartPage = () => {
       <div className="flex gap-8">
         {/* LEFT – Cart Items */}
         <div className="w-2/3 bg-gray-800 p-6 rounded-lg shadow space-y-4">
-          {cart.map((item: CartItem) => (
+          {cart.map((item) => (
             <div
               key={item.title}
               className="relative flex items-center gap-4 border-b pb-4 last:border-b-0"
             >
-              <div className="absolute top-3 right-3 flex flex-col items-end gap-10">
+              <div className="absolute top-3 right-3 flex flex-col items-end gap-6">
                 <button
                   className="text-gray-400 hover:text-red-500"
                   onClick={async () => {
-                    await removeItem(userId, item.title);
-                    dispatch(removeFromCart(item.title));
+                    await apiRemoveFromCart(userId, item.title);
+                    await syncCart();
                   }}
-                  aria-label="Remove item"
-                  title="Remove item"
                 >
                   <FaTrash size={16} />
                 </button>
 
-                <span className="text-xl text-white-300 font-semibold">
+                <span className="text-lg font-semibold">
                   ₹ {(item.price * item.quantity).toFixed(2)}
                 </span>
               </div>
+
               <img src={item.image} className="w-24 h-24 rounded" />
 
               <div className="flex-1">
                 <p className="font-semibold">{item.title}</p>
                 <p>₹ {item.price}</p>
 
-                <div className="flex gap-2 mt-2 items-center">
+                <div className="flex gap-3 mt-2 items-center">
                   <button
                     className="px-3 bg-gray-600 rounded"
                     onClick={async () => {
                       const newQty = item.quantity - 1;
+
                       if (newQty === 0) {
-                        await removeItem(userId, item.title);
-                        dispatch(removeFromCart(item.title));
+                        await apiRemoveFromCart(userId, item.title);
                       } else {
-                        await updateQty(userId, item.title, newQty);
-                        dispatch(
-                          updateQuantity({
-                            title: item.title,
-                            quantity: newQty,
-                          })
-                        );
+                        await apiUpdateCartQuantity(userId, item.title, newQty);
                       }
+
+                      await syncCart();
                     }}
-                    title="Decrease"
                   >
                     -
                   </button>
@@ -127,12 +121,9 @@ const CartPage = () => {
                     className="px-3 bg-gray-600 rounded"
                     onClick={async () => {
                       const newQty = item.quantity + 1;
-                      await updateQty(userId, item.title, newQty);
-                      dispatch(
-                        updateQuantity({ title: item.title, quantity: newQty })
-                      );
+                      await apiUpdateCartQuantity(userId, item.title, newQty);
+                      await syncCart();
                     }}
-                    title="Increase"
                   >
                     +
                   </button>
@@ -146,7 +137,7 @@ const CartPage = () => {
         <div className="w-1/3 bg-gray-800 p-6 rounded-lg shadow h-fit">
           <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
 
-          <div className="space-y-2 text-gray-200">
+          <div className="space-y-2">
             <div className="flex justify-between">
               <span>Subtotal</span>
               <span>₹ {subtotal.toFixed(2)}</span>
@@ -165,7 +156,10 @@ const CartPage = () => {
             </div>
           </div>
 
-          <button className="mt-6 w-full bg-color-primary font-semibold text-lg text-white py-3 rounded hover:opacity-90">
+          <button
+            onClick={() => router.push("/checkout")}
+            className="mt-6 w-full bg-color-primary py-3 rounded font-semibold"
+          >
             Proceed to Checkout
           </button>
         </div>
@@ -175,39 +169,3 @@ const CartPage = () => {
 };
 
 export default CartPage;
-
-// GraphQL helpers
-async function updateQty(userId: string, title: string, quantity: number) {
-  await fetch("http://localhost:4000/graphql", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
-        mutation UpdateCartQuantity($userId: ID!, $title: String!, $quantity: Int!) {
-          updateCartQuantity(userId: $userId, title: $title, quantity: $quantity) {
-            title
-            quantity
-          }
-        }
-      `,
-      variables: { userId, title, quantity },
-    }),
-  });
-}
-
-async function removeItem(userId: string, title: string) {
-  await fetch("http://localhost:4000/graphql", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
-        mutation RemoveFromCart($userId: ID!, $title: String!) {
-          removeFromCart(userId: $userId, title: $title) {
-            title
-          }
-        }
-      `,
-      variables: { userId, title },
-    }),
-  });
-}

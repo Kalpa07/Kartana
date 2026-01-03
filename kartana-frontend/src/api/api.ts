@@ -1,3 +1,5 @@
+import type { CartItem, Order, Address, } from "@/lib/types";
+
 const GRAPHQL_URL = process.env.NEXT_PUBLIC_GRAPHQL_URL || "http://localhost:4000/graphql";
 
 async function graphqlRequest<T>(
@@ -73,4 +75,208 @@ export const apiSignup = async (
   );
 
   return data.createUser;
+};
+
+/* ================= CART ================= */
+
+
+export const apiGetCart = async (userId: string) => {
+  const data = await graphqlRequest<{
+    getCart: CartItem[];
+  }>(
+    `
+    query GetCart($userId: ID!) {
+      getCart(userId: $userId) {
+        title
+        price
+        image
+        quantity
+      }
+    }
+    `,
+    { userId }
+  );
+
+  const cart = data.getCart.map(item => ({
+    title: item.title,
+    price: item.price,
+    quantity: item.quantity,
+    image: item.image,
+  }));
+
+  return cart;
+};
+
+export const apiAddToCart = async (
+  userId: string,
+  cartItem: { title: string; price: number; image?: string; quantity: number }
+) => {
+  const query = `
+    mutation AddToCart(
+      $userId: ID!
+      $title: String!
+      $price: Float!
+      $image: String
+      $quantity: Int!
+    ) {
+      addToCart(
+        userId: $userId
+        title: $title
+        price: $price
+        image: $image
+        quantity: $quantity
+      ) {
+        title
+        quantity
+      }
+    }
+  `;
+
+  const variables = {
+    userId,
+    ...cartItem,
+  };
+
+  const res = await graphqlRequest<{ addToCart: CartItem[] }>(query, variables);
+  return res.addToCart;
+};
+
+export const apiUpdateCartQuantity = async (
+  userId: string,
+  title: string,
+  quantity: number
+) => {
+  const data = await graphqlRequest<{
+    updateCartQuantity: CartItem[];
+  }>(
+    `
+    mutation UpdateCartQuantity(
+      $userId: ID!
+      $title: String!
+      $quantity: Int!
+    ) {
+      updateCartQuantity(
+        userId: $userId
+        title: $title
+        quantity: $quantity
+      ) {
+        title
+        price
+        quantity
+        image
+      }
+    }
+    `,
+    { userId, title, quantity }
+  );
+
+  return data.updateCartQuantity;
+};
+
+
+export const apiRemoveFromCart = async (
+  userId: string,
+  title: string
+) => {
+  const data = await graphqlRequest<{
+    removeFromCart: CartItem[];
+  }>(
+    `
+    mutation RemoveFromCart(
+      $userId: ID!
+      $title: String!
+    ) {
+      removeFromCart(
+        userId: $userId
+        title: $title
+      ) {
+        title
+        price
+        quantity
+        image
+      }
+    }
+    `,
+    { userId, title }
+  );
+
+  return data.removeFromCart;
+};
+
+/* ================= ORDERS ================= */
+
+export const apiPlaceOrder = async (
+  userId: string,
+  cartItems: CartItem[],
+  shippingAddress: Address
+) => {
+  const query = `
+    mutation PlaceOrder(
+      $userId: ID!
+      $items: [OrderItemInput!]!
+      $shippingAddress: AddressInput!
+    ) {
+      placeOrder(
+        userId: $userId
+        items: $items
+        shippingAddress: $shippingAddress
+      ) {
+        orderId
+        createdAt
+        total
+        status
+        items {
+          title
+          price
+          quantity
+          image
+        }
+      }
+    }
+  `;
+
+  const variables = {
+    userId,
+    items: cartItems.map(item => ({
+      title: item.title,
+      price: item.price,
+      quantity: item.quantity,
+      image: item.image,
+    })),
+    shippingAddress,
+  };
+
+  const res = await graphqlRequest<{ placeOrder: Order }>(query, variables);
+  return res.placeOrder;
+};
+
+export const apiFetchOrders = async (userId: string) => {
+  const data = await graphqlRequest<{ getOrders: Order[] }>(
+    `
+    query GetOrders($userId: ID!) {
+      getOrders(userId: $userId) {
+        orderId
+        createdAt
+        total
+        status
+        shippingAddress {
+          name
+          phone
+          street
+          city
+          state
+          pincode
+        }
+        items {
+          title
+          price
+          quantity
+        }
+      }
+    }
+    `,
+    { userId }
+  );
+
+  return data.getOrders;
 };

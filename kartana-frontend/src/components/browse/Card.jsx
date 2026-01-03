@@ -2,169 +2,110 @@
 
 import { FaStar } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     addToCart as addToCartRedux,
     updateQuantity,
     removeFromCart as removeFromCartRedux,
+    setCart,
 } from "@/store/cartSlice";
+import {
+    apiAddToCart,
+    apiUpdateCartQuantity,
+    apiRemoveFromCart,
+    apiGetCart,
+} from "@/api/api";
 
 const Card = ({ title, price, description, image, rate }) => {
-    const { data: session } = useSession();
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
-    const userData = JSON.parse(sessionStorage.getItem("userData") || "null");
+
+    const userData =
+        typeof window !== "undefined"
+            ? JSON.parse(sessionStorage.getItem("userData") || "null")
+            : null;
+
     const userId = userData?.id;
     const [quantity, setQuantity] = useState(0);
-    const [adding, setAdding] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const added = quantity > 0;
 
+    // 🔹 Fetch cart on mount to populate Redux (fix refresh issue)
     useEffect(() => {
         if (!userId) return;
 
-        const fetchCartItem = async () => {
+        const fetchCartOnMount = async () => {
             try {
-                const res = await fetch("http://localhost:4000/graphql", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        query: `
-              query GetCart($userId: ID!) {
-                getCart(userId: $userId) {
-                  title
-                  quantity
-                  price
-                  image
-                }
-              }
-            `,
-                        variables: { userId },
-                    }),
-                });
-
-                const result = await res.json();
-                const cartItems = result?.data?.getCart || [];
-                const item = cartItems.find((i) => i.title === title);
-
-                if (item) {
-                    setQuantity(item.quantity);
-                    dispatch(addToCartRedux(item));
-                }
+                const cartItems = await apiGetCart(userId);
+                dispatch(setCart(cartItems));
             } catch (err) {
-                console.error("Failed to fetch cart item:", err);
+                console.error("Failed to fetch cart on mount:", err);
             }
         };
 
-        fetchCartItem();
-    }, [userId, title, dispatch]);
+        fetchCartOnMount();
+    }, [userId, dispatch]);
 
-    // 🔹 Add item to cart
-    const addToCart = async () => {
-        if (!userData?.id) {
-            alert("Please log in first");
-            return;
-        }
+    // 🔹 Sync local quantity from Redux cart
+    useEffect(() => {
+        const existingItem = cart.find((item) => item.title === title);
+        setQuantity(existingItem ? existingItem.quantity : 0);
+    }, [cart, title]);
 
-        setAdding(true);
-
+    const syncCart = async () => {
+        if (!userId) return;
         try {
-            const res = await fetch("http://localhost:4000/graphql", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    query: `
-            mutation AddToCart($userId: ID!, $title: String!, $price: Float!, $image: String!, $quantity: Int!) {
-              addToCart(userId: $userId, title: $title, price: $price, image: $image, quantity: $quantity) {
-                title
-                quantity
-              }
-            }
-          `,
-                    variables: { userId, title, price, image, quantity: 1 },
-                }),
-            });
-
-            const result = await res.json();
-            const addedItem = result?.data?.addToCart;
-
-            if (addedItem) {
-                setQuantity(1);
-                dispatch(addToCartRedux({ title, price, image, quantity: 1 }));
-            }
+            const cartItems = await apiGetCart(userId);
+            dispatch(setCart(cartItems));
         } catch (err) {
-            console.error("Failed to add to cart:", err);
+            console.error("Failed to sync cart:", err);
+        }
+    };
+
+    const addToCart = async () => {
+        if (!userId) return alert("Please log in first");
+
+        setLoading(true);
+        try {
+            await apiAddToCart(userId, { title, price, image, quantity: 1 });
+            await syncCart();
+        } catch (err) {
+            console.error(err);
         } finally {
-            setAdding(false);
+            setLoading(false);
         }
     };
 
     const increment = async () => {
-        const newQty = quantity + 1;
-        setQuantity(newQty);
-
-        await fetch("http://localhost:4000/graphql", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                query: `
-          mutation UpdateCartQuantity($userId: ID!, $title: String!, $quantity: Int!) {
-            updateCartQuantity(userId: $userId, title: $title, quantity: $quantity) {
-              title
-              quantity
-            }
-          }
-        `,
-                variables: { userId, title, quantity: newQty },
-            }),
-        });
-
-        dispatch(updateQuantity({ title, quantity: newQty }));
+        if (!userId) return;
+        setLoading(true);
+        try {
+            const newQty = quantity + 1;
+            await apiUpdateCartQuantity(userId, title, newQty);
+            await syncCart();
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const decrement = async () => {
-        if (quantity > 1) {
-            const newQty = quantity - 1;
-            setQuantity(newQty);
-
-            await fetch("http://localhost:4000/graphql", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    query: `
-            mutation UpdateCartQuantity($userId: ID!, $title: String!, $quantity: Int!) {
-              updateCartQuantity(userId: $userId, title: $title, quantity: $quantity) {
-                title
-                quantity
-              }
+        if (!userId) return;
+        setLoading(true);
+        try {
+            if (quantity > 1) {
+                const newQty = quantity - 1;
+                await apiUpdateCartQuantity(userId, title, newQty);
+            } else if (quantity === 1) {
+                await apiRemoveFromCart(userId, title);
             }
-          `,
-                    variables: { userId, title, quantity: newQty },
-                }),
-            });
-
-            dispatch(updateQuantity({ title, quantity: newQty }));
-        } else {
-            // remove item
-            setQuantity(0);
-
-            await fetch("http://localhost:4000/graphql", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    query: `
-            mutation RemoveFromCart($userId: ID!, $title: String!) {
-              removeFromCart(userId: $userId, title: $title) {
-                title
-              }
-            }
-          `,
-                    variables: { userId, title },
-                }),
-            });
-
-            dispatch(removeFromCartRedux(title));
+            await syncCart();
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -179,13 +120,13 @@ const Card = ({ title, price, description, image, rate }) => {
                     <p className="text-white text-xl font-semibold">
                         {title.length > 30 ? `${title.slice(0, 30)}...` : title}
                     </p>
-                    <p className="text-white text-xl font-semibold">
-                        ${price.toString().length > 5 ? `${price.toString().slice(0, 5)}...` : price}
-                    </p>
+                    <p className="text-white text-xl font-semibold">₹ {price}</p>
                 </div>
 
                 <p className="text-white font-light">
-                    {description.length > 100 ? `${description.slice(0, 100)}...` : description}
+                    {description.length > 100
+                        ? `${description.slice(0, 100)}...`
+                        : description}
                 </p>
 
                 <div className="flex justify-between items-center mt-4">
@@ -196,20 +137,29 @@ const Card = ({ title, price, description, image, rate }) => {
 
                     {added ? (
                         <div className="flex items-center gap-2">
-                            <button onClick={decrement} className="px-2 bg-gray-500 rounded">
+                            <button
+                                onClick={decrement}
+                                disabled={loading}
+                                className="px-2 bg-gray-500 rounded"
+                            >
                                 -
                             </button>
                             <span className="text-white">{quantity}</span>
-                            <button onClick={increment} className="px-2 bg-gray-500 rounded">
+                            <button
+                                onClick={increment}
+                                disabled={loading}
+                                className="px-2 bg-gray-500 rounded"
+                            >
                                 +
                             </button>
                         </div>
                     ) : (
                         <button
                             onClick={addToCart}
+                            disabled={loading}
                             className="bg-color-primary px-4 py-2 rounded text-white"
                         >
-                            {adding ? "Adding..." : "Add to Cart"}
+                            {loading ? "Adding..." : "Add to Cart"}
                         </button>
                     )}
                 </div>
