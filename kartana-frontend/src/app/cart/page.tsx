@@ -10,6 +10,7 @@ import {
   apiRemoveFromCart,
 } from "@/api/api";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const CartPage = () => {
   const dispatch = useAppDispatch();
@@ -90,7 +91,13 @@ const CartPage = () => {
                 </span>
               </div>
 
-              <img src={item.image} className="w-24 h-24 rounded" />
+              <Image
+                src={item?.image || "/"}
+                alt="Item"
+                width={24}
+                height={24}
+                className="w-24 h-24 rounded"
+              />
 
               <div className="flex-1">
                 <p className="font-semibold">{item.title}</p>

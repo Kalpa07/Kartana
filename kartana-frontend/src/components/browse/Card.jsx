@@ -15,6 +15,7 @@ import {
     apiRemoveFromCart,
     apiGetCart,
 } from "@/api/api";
+import Image from "next/image";
 
 const Card = ({ title, price, description, image, rate }) => {
     const dispatch = useDispatch();
@@ -110,7 +111,7 @@ const Card = ({ title, price, description, image, rate }) => {
     return (
         <div className="relative flex flex-col my-6 bg-grey shadow-sm rounded-lg w-80 mx-5">
             <div className="relative p-2.5 h-75 overflow-hidden rounded-xl">
-                <img src={image} alt={title} className="w-75 h-75 rounded-md" />
+                <Image src={image} alt={title} className="w-75 h-75 rounded-md" />
             </div>
 
             <div className="p-4">
