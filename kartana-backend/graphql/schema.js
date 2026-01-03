@@ -18,11 +18,45 @@ const typeDefs = gql`
     quantity: Int!
   }
 
+  type Address {
+    name: String!
+    phone: String!
+    street: String!
+    city: String!
+    state: String!
+    pincode: String!
+  } 
+
+  input AddressInput {
+    name: String!
+    phone: String!
+    street: String!
+    city: String!
+    state: String!
+    pincode: String!
+  }
+
+  type OrderItem {
+    title: String!
+    price: Float!
+    quantity: Int!
+    image: String
+  }
+
+  input OrderItemInput {
+    title: String!
+    price: Float!
+    quantity: Int!
+    image: String
+  }
+
   type Order {
-    orderId: String
-    date: String
-    items: [CartItem]
-    total: Float
+    orderId: ID!
+    createdAt: String!
+    total: Float!
+    status: String!
+    items: [OrderItem!]!
+    shippingAddress: Address!
   }
 
   input CreateUserInput {
@@ -60,8 +94,8 @@ const typeDefs = gql`
     userByEmail(email: String!): User
     products: [Product]
     product(id: ID!): Product
-
     getCart(userId: ID!): [CartItem]
+    getOrders(userId: ID!): [Order]
   }
 
   type Mutation {
@@ -83,11 +117,15 @@ const typeDefs = gql`
       quantity: Int!
     ): [CartItem]
 
-    removeFromCart(
+    removeFromCart(userId: ID!, title: String):
+    [CartItem]
+
+    placeOrder(
       userId: ID!
-      title: String!
-    ): [CartItem]
-    }
+      items: [OrderItemInput!]!
+      shippingAddress: AddressInput!
+    ): Order!
+  }
 `;
 
 export default typeDefs;

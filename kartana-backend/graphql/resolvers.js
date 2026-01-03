@@ -13,6 +13,14 @@ const resolvers = {
       const user = await Users.findById(userId);
       return user.cart;
     },
+
+    getOrders: async (_, { userId }) => {
+      const user = await Users.findById(userId);
+      if (!user) throw new Error("User not found");
+
+      return user.orderHistory;
+    },
+
   },
 
   Mutation: {
@@ -47,6 +55,7 @@ const resolvers = {
 
     addToCart: async (_, { userId, title, price, image, quantity }) => {
       const user = await Users.findById(userId);
+      if (!user) throw new Error("User not found");
 
       const existingItem = user.cart.find(item => item.title === title);
 
@@ -80,6 +89,43 @@ const resolvers = {
 
       await user.save();
       return user.cart;
+    },
+
+    placeOrder: async (_, { userId, items, shippingAddress }) => {
+      const user = await Users.findById(userId);
+
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      if (!user.cart.length) {
+        throw new Error("Cart is empty");
+      }
+
+      const total = user.cart.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+
+      const order = {
+        orderId: Date.now().toString(),
+        items: user.cart.map(item => ({
+          title: item.title,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+        shippingAddress,
+        total,
+        status: "PLACED",
+        createdAt: new Date(),
+      };
+
+      user.orderHistory.push(order);
+      user.cart = [];
+
+      await user.save();
+
+      return order;
     },
   },
 };
