@@ -15,31 +15,26 @@ const startServer = async () => {
 
     const app = express();
 
-    app.options("*", cors());
-
-    const server = new ApolloServer({
-      typeDefs,
-      resolvers,
-    });
-
-    await server.start();
-
-    server.applyMiddleware({
-      app,
-      cors: {
+    app.use(
+      cors({
         origin: [
-          "http://localhost:3000",
-          "https://kartana-iota.vercel.app",
+          "http://localhost:3000",           // Local frontend
+          "https://kartana-iota.vercel.app", // Deployed frontend
         ],
         credentials: true,
-      },
-    });
+      })
+    );
+
+    const server = new ApolloServer({ typeDefs, resolvers });
+    await server.start();
+
+    server.applyMiddleware({ app, path: "/graphql", cors: false });
 
     const PORT = process.env.PORT || 4000;
     app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
+      console.log(`Server running on port ${PORT}`);
+      console.log(`GraphQL endpoint: /graphql`);
     });
-
   } catch (err) {
     console.error("Error starting server:", err);
   }
