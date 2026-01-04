@@ -18,17 +18,26 @@ const startServer = async () => {
     app.use(
       cors({
         origin: [
-          "http://localhost:3000",           // Local frontend
-          "https://kartana-iota.vercel.app", // Deployed frontend
+          "http://localhost:3000",
+          "https://kartana-iota.vercel.app",
         ],
         credentials: true,
       })
     );
 
+    // 🔹 Health check (VERY IMPORTANT FOR RENDER)
+    app.get("/", (req, res) => {
+      res.send("Kartana GraphQL API is running 🚀");
+    });
+
     const server = new ApolloServer({ typeDefs, resolvers });
     await server.start();
 
-    server.applyMiddleware({ app, path: "/graphql", cors: false });
+    server.applyMiddleware({
+      app,
+      path: "/graphql",
+      cors: false,
+    });
 
     const PORT = process.env.PORT || 4000;
     app.listen(PORT, () => {
