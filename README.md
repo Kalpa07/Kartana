@@ -1,21 +1,33 @@
 🛒 Kartana
-Kartana is a work-in-progress hybrid e-commerce platform inspired by Croma, combining Web2 and Web3 technologies.
+Kartana is a modern e-commerce platform for tech products, built to deliver a smooth shopping experience.
 
-The goal is to allow users to purchase tech products using traditional payments (like Razorpay or Stripe) as well as crypto payments via MetaMask and smart contracts.
+Currently, Kartana is fully Web2-based, allowing users to browse products, manage a cart, and place orders. The project is built with Next.js, Node.js, Express, MongoDB, and leverages GraphQL APIs for efficient data fetching and state management.
 
-🚧 Status
-This project is currently under development. More features and details will be added soon.
+Future plans include UX enhancements, payment integration, and eventual Web3 features like crypto payments and smart contracts.
 
-Tech Stack (Planned)
+🚧 Current Features
+
+~ Browse tech products with dynamic product listing
+~ Add/remove items from the cart
+~ Checkout flow with address form and order placement
+~ User authentication and session management
+~ Orders move seamlessly from cart → order
+~ Fully responsive UI built with TailwindCSS
+~ GraphQL API integration for efficient frontend-backend communication
+
+🔧 Tech Stack
+
 Frontend: Next.js, TailwindCSS
-
 Backend: Node.js, Express, MongoDB
+API: GraphQL
+Planned Web3 stack: Solidity, ethers.js, MetaMask, IPFS
 
-Web3: Solidity, ethers.js, MetaMask, IPFS
+Planned Enhancements (Web2)
 
-Project Structure (WIP)
-/frontend — Next.js app
-
-/backend — API server
-
-/contracts — Smart contracts
+UX Improvements: Skeleton loaders, smooth page transitions, hover effects, toast notifications, dark mode toggle
+Performance: Lazy loading images, caching with SWR/React Query, SSR/ISR for faster product pages
+Cart & Checkout: Persistent cart, coupon/discount support, order confirmation, estimated delivery
+User Account: Wishlist/favorites, enhanced profile management
+Admin / Management: Admin dashboard to manage products and orders, basic analytics
+Polish / Micro-interactions: Cart animations, loading spinners, interactive buttons
+Testing & Accessibility: Unit/integration tests, ARIA roles, keyboard navigation
