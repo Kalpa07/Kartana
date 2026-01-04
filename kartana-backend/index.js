@@ -29,7 +29,17 @@ const startServer = async () => {
       resolvers,
     });
     await server.start();
-    server.applyMiddleware({ app });
+    server.applyMiddleware({
+      app,
+      cors: {
+        origin: [
+          "http://localhost:3000",
+          "https://kartana-iota.vercel.app",
+        ],
+        credentials: true,
+      },
+    });
+
 
     const PORT = process.env.PORT || 4000;
 
