@@ -8,6 +8,7 @@ const initialState: User = {
   lastName: '',
   email: '',
   cart: [],
+  orderHistory: [],
   isAuthenticated: false,
 };
 
