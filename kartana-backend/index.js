@@ -1,5 +1,6 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
+import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import typeDefs from "./graphql/schema.js";
@@ -13,6 +14,8 @@ const startServer = async () => {
     console.log("MongoDB connected");
 
     const app = express();
+
+    app.options("*", cors());
 
     const server = new ApolloServer({
       typeDefs,
