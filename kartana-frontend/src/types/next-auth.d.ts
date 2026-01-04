@@ -1,13 +1,14 @@
 import { CartItem, Order } from "@/lib/types";
 import { DefaultSession, DefaultUser } from "next-auth";
+import { DefaultJWT } from "next-auth/jwt";
 
 declare module "next-auth" {
   interface Session {
     user: {
-      id: string;
-      firstName: string;
-      lastName: string;
-      email: string;
+      id?: string;
+      firstName?: string;
+      lastName?: string;
+      email?: string;
       cart?: CartItem[];
       orderHistory?: Order[];
     } & DefaultSession["user"];
@@ -24,8 +25,8 @@ declare module "next-auth" {
 }
 
 declare module "next-auth/jwt" {
-  interface JWT {
-    id: string;
+  interface JWT extends DefaultJWT {
+    id?: string;
     firstName?: string;
     lastName?: string;
     email?: string;
