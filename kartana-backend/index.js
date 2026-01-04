@@ -1,10 +1,10 @@
-import express from "express";
-import { ApolloServer } from "apollo-server-express";
-import cors from "cors";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import typeDefs from "./graphql/schema.js";
-import resolvers from "./graphql/resolvers.js";
+const express = require("express");
+const { ApolloServer } = require("apollo-server-express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const typeDefs = require("./graphql/schema.js");
+const resolvers = require("./graphql/resolvers.js");
 
 dotenv.config();
 
