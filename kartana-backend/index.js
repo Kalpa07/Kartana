@@ -31,9 +31,12 @@ const startServer = async () => {
     await server.start();
     server.applyMiddleware({ app });
 
-    app.listen(4000, () => {
-      console.log("Server running on http://localhost:4000/graphql");
+    const PORT = process.env.PORT || 4000;
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
     });
+
   } catch (err) {
     console.error("Error starting server:", err);
   }
