@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import type { CartItem, Order, Address } from "@/lib/types";
 
-const GRAPHQL_URL = process.env.NEXT_PUBLIC_GRAPHQL_URL!; // Must be set
+const GRAPHQL_URL = process.env.NEXT_PUBLIC_GRAPHQL_URL!;
 
 export const client = new ApolloClient({
   uri: GRAPHQL_URL,
